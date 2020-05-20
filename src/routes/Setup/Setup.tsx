@@ -1,0 +1,110 @@
+import React, { useEffect, useState } from 'react';
+import { Switch, Route } from 'react-router-dom';
+import { Authenticate } from './Authenticate';
+import { PredictionDefs } from './PredictionDefs';
+import { MapFields } from './MapFields';
+import { Confirm } from './Confirm';
+import { useLocation, useHistory } from 'react-router-dom';
+import { Dashboard } from '@tableau/extensions-api-types';
+import { DashboardParams, DashboardParam, SFDCAuthResponse, PredictionDef } from './types';
+import { MappedFields } from '../../store/types';
+
+export const Setup: React.FC = () => {
+
+    const [ auth, setAuth ] = useState<SFDCAuthResponse>();
+    const [ params, setParams ] = useState<DashboardParams>();
+    const [ predictionDef, setPredictionDef ] = useState<PredictionDef>();
+    const [ mappedFields, setMappedFields ] = useState<MappedFields>();
+
+    const { extensions: { ui, dashboardContent } } = window.tableau;
+    let dashboard: Dashboard;
+    if (dashboardContent) dashboard = dashboardContent.dashboard;
+    const location = useLocation();
+    const history = useHistory();
+
+    const openSetupDialog = () => {
+        const url = `${window.location.origin}/setup/authenticate`;
+        dashboard.getParametersAsync()
+            .then(params => {
+                const initPayload: DashboardParams = params.map(p => ({
+                    name: p.name,
+                    dataType: p.dataType
+                } as DashboardParam))
+                ui.displayDialogAsync(url, JSON.stringify(initPayload), {
+                    width: 800,
+                    height: 600
+                });
+            })
+    }
+
+    const handleAuthenticated = (auth: SFDCAuthResponse, params: DashboardParams) => {
+        setAuth(auth);
+        setParams(params);
+    }
+
+    const handleFieldsMapped = (mappedFields: MappedFields) => {
+        setMappedFields(mappedFields);
+    }
+
+    const handleSetupDone = () => {
+        console.log('DONE')
+    }
+
+    useEffect(() => {
+        // Only open setup dialog if we're at the root setup path
+        if (location.pathname === '/setup') {
+            openSetupDialog();
+        }
+    }, []);
+
+    useEffect(() => {
+        if (auth) history.push('/setup/prediction-defs');
+    }, [auth]);
+
+    useEffect(() => {
+        if (predictionDef) history.push('/setup/map-fields');
+    }, [predictionDef]);
+
+    useEffect(() => {
+        if (mappedFields) history.push('/setup/confirm')
+    }, [mappedFields])
+
+    return (
+        <Switch>
+            <Route path='/setup' exact>
+                <div>Setup</div>
+            </Route>
+            <Route path='/setup/authenticate'>
+                <Authenticate 
+                    onAuthenticated={handleAuthenticated}
+                />
+            </Route>
+            <Route path='/setup/prediction-defs'>
+                <PredictionDefs 
+                    auth={auth!}
+                    onPredictionDefSelected={def => setPredictionDef(def)}
+                    onBack={() => history.push('/setup/authenticate')}
+                />
+            </Route>
+            <Route path='/setup/map-fields'>
+                <MapFields 
+                    auth={auth!}
+                    predictionDef={predictionDef!}
+                    params={params!}
+                    onFieldsMapped={handleFieldsMapped}
+                    onBack={() => history.push('/setup/prediction-defs')}
+                />
+            </Route>
+            <Route path='/setup/confirm'>
+                <Confirm
+                    auth={auth!}
+                    predictionDef={predictionDef!}
+                    mappedFields={mappedFields!}
+                    onDone={handleSetupDone}
+                    onBack={() => history.push('/setup/map-fields')}
+                />
+            </Route>
+        </Switch>
+    )
+
+}
