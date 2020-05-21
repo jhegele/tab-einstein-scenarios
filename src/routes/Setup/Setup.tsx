@@ -8,6 +8,9 @@ import { useLocation, useHistory } from 'react-router-dom';
 import { Dashboard } from '@tableau/extensions-api-types';
 import { DashboardParams, DashboardParam, SFDCAuthResponse, PredictionDef } from './types';
 import { MappedFields } from '../../store/types';
+// import { useDispatch } from 'react-redux';
+// import { authUpdate } from '../../store/slices/auth';
+// import { predictionUpdateAll } from '../../store/slices/prediction';
 
 export const Setup: React.FC = () => {
 
@@ -16,11 +19,12 @@ export const Setup: React.FC = () => {
     const [ predictionDef, setPredictionDef ] = useState<PredictionDef>();
     const [ mappedFields, setMappedFields ] = useState<MappedFields>();
 
-    const { extensions: { ui, dashboardContent } } = window.tableau;
+    const { extensions: { ui, dashboardContent, settings } } = window.tableau;
     let dashboard: Dashboard;
     if (dashboardContent) dashboard = dashboardContent.dashboard;
     const location = useLocation();
     const history = useHistory();
+    // const dispatch = useDispatch();
 
     const openSetupDialog = () => {
         const url = `${window.location.origin}/setup/authenticate`;
@@ -33,7 +37,9 @@ export const Setup: React.FC = () => {
                 ui.displayDialogAsync(url, JSON.stringify(initPayload), {
                     width: 800,
                     height: 600
-                });
+                })
+                    .then(() => history.push('/'))
+                    .catch(() => history.push('/'))
             })
     }
 
@@ -47,7 +53,34 @@ export const Setup: React.FC = () => {
     }
 
     const handleSetupDone = () => {
-        console.log('DONE')
+        if (auth && predictionDef && mappedFields && mappedFields.length > 0) {
+            const authSettings = {
+                refreshToken: auth.refresh_token,
+                accessToken: auth.access_token,
+                id: auth.id,
+                idToken: auth.id_token,
+                instanceUrl: auth.instance_url,
+                issuedAt: auth.issued_at,
+                scope: auth.scope,
+                signature: auth.signature,
+                tokenType: auth.token_type
+            }
+            const predictionSettings = {
+                id: predictionDef.id,
+                label: predictionDef.label,
+                mappedFields: mappedFields
+            }
+            // dispatch(authUpdate(authSettings));
+            // dispatch(predictionUpdateAll(predictionSettings));
+            settings.set('auth', JSON.stringify(authSettings))
+            settings.set('prediction', JSON.stringify(predictionSettings));
+            settings.saveAsync()
+                .then(result => {
+                    console.log('SAVED SETTINGS: ', result);
+                    ui.closeDialog('');
+                })
+                .catch(error => console.log('ERROR SAVING SETTINGS: ', error))
+        }
     }
 
     useEffect(() => {

@@ -2,7 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Extension } from '../types';
 
 const initExtension: Extension = {
-    initialized: false
+    initialized: false,
+    setupComplete: false
 }
 
 const sliceExtension = createSlice({
@@ -14,10 +15,16 @@ const sliceExtension = createSlice({
                 ...state,
                 initialized: action.payload
             }
+        },
+        extensionSetSetupComplete: (state, action: PayloadAction<boolean>) => {
+            return {
+                ...state,
+                setupComplete: action.payload
+            }
         }
     }
 });
 
-export const { extensionSetInitialized } = sliceExtension.actions;
+export const { extensionSetInitialized, extensionSetSetupComplete } = sliceExtension.actions;
 
 export default sliceExtension.reducer;

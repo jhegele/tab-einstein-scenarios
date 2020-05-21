@@ -6,8 +6,8 @@ export type APIAuthReq = {
 
 export type APIPredictionDef = {
     id: string,
-    url: string,
-    modelsUrl: string
+    url?: string,
+    modelsUrl?: string
 }
 
 export type APIGetPredictionDefsReq = {
@@ -17,6 +17,15 @@ export type APIGetPredictionDefsReq = {
 export type APIGetModelDefsReq = {
     auth: APIAuthReq,
     predictionDef: APIPredictionDef
+}
+
+export type APIGetPredictionReq = {
+    auth: APIAuthReq,
+    predictionDef: APIPredictionDef,
+    data: {
+        columnNames: string[],
+        rows: string[][]
+    }
 }
 
 export type SFDCUser = {
@@ -71,4 +80,34 @@ export type SFDCModelDefsResponse = {
     models: SFDCModelDef[],
     totalSize: string,
     url: string
+}
+
+export type SFDCColumn = {
+    columnName: string,
+    columnValue: string
+}
+
+export type SFDCPrediction = {
+    prediction: {
+        baseLine: number,
+        importWarnings: {
+            mismatchedColumns: string[],
+            missingColumns: string[],
+            outOfBoundsColumns: SFDCColumn[]
+        },
+        middleValues: { columns: SFDCColumn[], value: number }[],
+        other: number,
+        smallTermCount: number,
+        total: number;
+    },
+    prescriptions: any[],
+    status: string
+}
+
+export type SFDCPredictionResponse = {
+    predictionDefinition: string,
+    predictions: SFDCPrediction[],
+    settings: {
+        maxPrescriptions: number
+    }
 }

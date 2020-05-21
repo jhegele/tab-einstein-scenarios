@@ -73,6 +73,22 @@ def api_get_model_defs():
         'Authorization': '{} {}'.format(req_body['auth']['tokenType'], req_body['auth']['accessToken'])
     }
     r = requests.get(url, headers=headers)
+    return jsonify(r.json())
+
+@app.route('/api/get-prediction', methods=['POST'])
+def api_get_prediction():
+    req_body = request.get_json()
+    url = '{}/services/data/v46.0/smartdatadiscovery/predict'.format(req_body['auth']['instanceUrl'])
+    headers = {
+        'Authorization': '{} {}'.format(req_body['auth']['tokenType'], req_body['auth']['accessToken'])
+    }
+    payload = {
+        'predictionDefinition': req_body['predictionDef']['id'],
+        'type': 'RawData',
+        'columnNames': req_body['data']['columnNames'],
+        'rows': req_body['data']['rows']
+    }
+    r = requests.post(url, json=payload, headers=headers)
     print(r.json())
     return jsonify(r.json())
 

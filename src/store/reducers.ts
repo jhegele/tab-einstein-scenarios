@@ -1,12 +1,14 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import auth from './slices/auth';
-import fields from './slices/fields';
 import extension from './slices/extension';
+import prediction from './slices/prediction';
+import preferences from './slices/preferences';
 
 const rootReducer = combineReducers({
     auth,
-    fields,
-    extension
+    extension,
+    prediction,
+    preferences
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
