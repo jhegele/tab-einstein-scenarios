@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Extension, Setup, Prefs } from './routes';
+import { Extension, Setup, Prefs, WebAuthConfirm } from './routes';
 import { css, Global } from '@emotion/core';
 import type { Extensions } from '@tableau/extensions-api-types';
 
@@ -69,7 +69,7 @@ const App: React.FC = () => {
                         <Prefs />
                     </Route>
                     <Route path='/auth/confirm'>
-                        <div>Authenticated!</div>
+                        <WebAuthConfirm />
                     </Route>
                 </Switch>
             </Router>

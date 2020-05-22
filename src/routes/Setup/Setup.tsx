@@ -8,9 +8,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 import { Dashboard } from '@tableau/extensions-api-types';
 import { DashboardParams, DashboardParam, SFDCAuthResponse, PredictionDef } from './types';
 import { MappedFields } from '../../store/types';
-// import { useDispatch } from 'react-redux';
-// import { authUpdate } from '../../store/slices/auth';
-// import { predictionUpdateAll } from '../../store/slices/prediction';
+import { SetupDisplay } from './SetupDisplay'
 
 export const Setup: React.FC = () => {
 
@@ -19,12 +17,11 @@ export const Setup: React.FC = () => {
     const [ predictionDef, setPredictionDef ] = useState<PredictionDef>();
     const [ mappedFields, setMappedFields ] = useState<MappedFields>();
 
-    const { extensions: { ui, dashboardContent, settings } } = window.tableau;
+    const { extensions: { ui, dashboardContent, settings, environment } } = window.tableau;
     let dashboard: Dashboard;
     if (dashboardContent) dashboard = dashboardContent.dashboard;
     const location = useLocation();
     const history = useHistory();
-    // const dispatch = useDispatch();
 
     const openSetupDialog = () => {
         const url = `${window.location.origin}/setup/authenticate`;
@@ -39,7 +36,7 @@ export const Setup: React.FC = () => {
                     height: 600
                 })
                     .then(() => history.push('/'))
-                    .catch(() => history.push('/'))
+                    .catch(() => console.log('Setup manually cancelled by user!'))
             })
     }
 
@@ -100,10 +97,17 @@ export const Setup: React.FC = () => {
         if (mappedFields) history.push('/setup/confirm')
     }, [mappedFields])
 
+    // environment does not exist in the dialog context, so make sure
+    // it's available before setting the mode
+    const mode = environment ? environment.mode : undefined;
+
     return (
         <Switch>
             <Route path='/setup' exact>
-                <div>Setup</div>
+                <SetupDisplay
+                    isAuthoring={mode === 'authoring'}
+                    onOpenSetupDialog={openSetupDialog}
+                />
             </Route>
             <Route path='/setup/authenticate'>
                 <Authenticate 
