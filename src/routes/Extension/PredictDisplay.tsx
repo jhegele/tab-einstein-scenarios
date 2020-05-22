@@ -3,6 +3,7 @@ import { SFDCPredictionResponse } from '../../api/types';
 import { useSelector, shallowEqual } from 'react-redux'
 import { RootState } from '../../store';
 import { LayoutExtension } from '../../components';
+import numeral from 'numeral';
 
 interface PredictDisplayProps {
     prediction: SFDCPredictionResponse;
@@ -17,12 +18,14 @@ export const PredictDisplay: React.FC<PredictDisplayProps> = ({ prediction }) =>
         shallowEqual
     )
 
+    const predictedValue = prediction.predictions[0].prediction.total;
+
     return (
         <LayoutExtension
             prefs={preferences}
             showToolbar={environment.mode === 'authoring'}
         >
-            {prediction.predictions[0].prediction.total.toString()}
+            {numeral(predictedValue).format(preferences.textPrimary.numberFormatting)}
         </LayoutExtension>
     )
 
