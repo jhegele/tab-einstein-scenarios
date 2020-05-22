@@ -4,6 +4,7 @@ import { Preferences, PreferencesTextWeights } from '../../store/types';
 import { Loading } from '../../components';
 import { TextField, DropdownSelect, Button } from '@tableau/tableau-ui';
 import { ColorPicker } from '../../components';
+import numeral from 'numeral';
 
 const cssOuterContainer = css`
     width: 100%;
@@ -134,7 +135,7 @@ export const Prefs: React.FC = () => {
             <div css={cssContentContainer}>
                 <div css={cssExampleOuterContainer}>
                     <div css={cssExampleContainer(prefs)}>
-                        {prefs.textPrimary.prefix}{sampleText}{prefs.textPrimary.suffix}
+                        {prefs.textPrimary.prefix}{numeral(sampleText).format(prefs.textPrimary.numberFormatting)}{prefs.textPrimary.suffix}
                     </div>
                 </div>
                 <div css={cssControlsContainer}>
@@ -193,7 +194,13 @@ export const Prefs: React.FC = () => {
                         label='Suffix'
                         value={prefs.textPrimary.suffix || ''}
                         onChange={({ target: { value }}) => setPrefs((curr) => ({...curr!, textPrimary: { ...curr!.textPrimary, suffix: value }}))}
-                    />    
+                    />
+                    <TextField
+                        kind='line'
+                        label='Number Formatting'
+                        value={prefs.textPrimary.numberFormatting}
+                        onChange={({ target: { value }}) => setPrefs((curr) => ({...curr!, textPrimary: { ...curr!.textPrimary, numberFormatting: value }}))}
+                    />
                 </div>
             </div>
         </div>

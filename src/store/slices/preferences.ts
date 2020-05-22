@@ -11,7 +11,8 @@ const initPreferences: Preferences = {
     textPrimary: {
         sizeInPx: 24,
         weight: 'bold',
-        color: '#333'
+        color: '#333',
+        numberFormatting: '0,0.00'
     }
 }
 

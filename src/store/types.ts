@@ -37,7 +37,8 @@ export type PreferencesText = {
     weight: PreferencesTextWeights,
     color: string,
     prefix?: string,
-    suffix?: string
+    suffix?: string,
+    numberFormatting: string
 }
 
 export type PreferencesUiColors = {
