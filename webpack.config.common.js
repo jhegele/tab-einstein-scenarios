@@ -25,11 +25,11 @@ module.exports = {
                     publicPath: '/static/'
                 }
             },
-            // { 
-            //     test: /\.css$/, 
-            //     use: ['style-loader', 'css-loader'],
-            //     include: /node_modules/
-            // }
+            { 
+                test: /\.css$/, 
+                use: ['style-loader', 'css-loader'],
+                include: /node_modules/
+            }
         ],
     },
 

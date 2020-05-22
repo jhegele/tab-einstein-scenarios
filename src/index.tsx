@@ -1,12 +1,14 @@
 import './static/js/tableau.extensions.1.latest.min.js';
 import * as fonts from './fonts';
+import 'tippy.js/dist/tippy.css';
+import 'tippy.js/animations/perspective.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Extension, Setup } from './routes';
+import { Extension, Setup, Prefs } from './routes';
 import { css, Global } from '@emotion/core';
 import type { Extensions } from '@tableau/extensions-api-types';
 
@@ -62,6 +64,9 @@ const App: React.FC = () => {
                     </Route>
                     <Route path='/setup'>
                         <Setup />
+                    </Route>
+                    <Route path='/prefs'>
+                        <Prefs />
                     </Route>
                     <Route path='/auth/confirm'>
                         <div>Authenticated!</div>

@@ -19,7 +19,7 @@ export const Predict: React.FC = () => {
     if (!extensions.dashboardContent.dashboard) throw 'Error: dashboard object not found in dashboardContent object!'
     const { dashboard } = extensions.dashboardContent;
 
-    const { auth, prediction } = useSelector(
+    const { auth, prediction, preferences } = useSelector(
         (state: RootState) => state,
         shallowEqual
     )
@@ -63,7 +63,8 @@ export const Predict: React.FC = () => {
             auth: {
                 accessToken: auth.accessToken!,
                 tokenType: auth.tokenType!,
-                instanceUrl: auth.instanceUrl!
+                instanceUrl: auth.instanceUrl!,
+                refreshToken: auth.refreshToken!
             },
             predictionDef: {
                 id: prediction.id!,
@@ -73,8 +74,9 @@ export const Predict: React.FC = () => {
                 rows: [dataRow]
             }
         })
-            .then(({ data }) => {
-                setPredictionResponse(data);
+            .then((predictionResponse) => {
+                console.log(predictionResponse);
+                setPredictionResponse(predictionResponse);
                 setLoading(false);
             })
     }

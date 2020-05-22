@@ -55,6 +55,18 @@ def auth_callback():
 def auth_confirm():
     return render_template('index.html')
 
+@app.route('/auth/refresh', methods=['POST'])
+def auth_refresh():
+    req_body = request.get_json()
+    payload = {
+        'grant_type': 'refresh_token',
+        'client_id': CONSUMER_KEY,
+        'client_secret': CONSUMER_SECRET,
+        'refresh_token': req_body['auth']['refreshToken']
+    }
+    r = requests.post(ACCESS_TOKEN_URL, data=payload)
+    return jsonify(r.json())
+
 @app.route('/api/get-prediction-defs', methods=['POST'])
 def api_get_prediction_defs():
     req_body = request.get_json()
@@ -89,7 +101,6 @@ def api_get_prediction():
         'rows': req_body['data']['rows']
     }
     r = requests.post(url, json=payload, headers=headers)
-    print(r.json())
     return jsonify(r.json())
 
 @app.route('/', defaults={'path': None})

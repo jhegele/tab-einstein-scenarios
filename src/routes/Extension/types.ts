@@ -1,4 +1,5 @@
 export type ExtensionSettings = {
     auth?: string,
-    prediction?: string
+    prediction?: string,
+    preferences?: string,
 }

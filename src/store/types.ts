@@ -28,17 +28,26 @@ export type Extension = {
     setupComplete: boolean
 }
 
+export type PreferencesTextWeights = 
+    | 'bold'
+    | 'normal'
+
 export type PreferencesText = {
     sizeInPx: number,
-    weight: 'bolder' | 'bold' | 'normal' | 'lighter',
+    weight: PreferencesTextWeights,
     color: string,
     prefix?: string,
     suffix?: string
 }
 
+export type PreferencesUiColors = {
+    background: string,
+    spinner: string
+}
+
 export type Preferences = {
     showExplanatory: boolean,
     showPrescriptive: boolean,
-    backgroundColor: string,
+    uiColors: PreferencesUiColors,
     textPrimary: PreferencesText
 }

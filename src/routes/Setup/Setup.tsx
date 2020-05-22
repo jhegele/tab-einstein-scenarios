@@ -70,8 +70,6 @@ export const Setup: React.FC = () => {
                 label: predictionDef.label,
                 mappedFields: mappedFields
             }
-            // dispatch(authUpdate(authSettings));
-            // dispatch(predictionUpdateAll(predictionSettings));
             settings.set('auth', JSON.stringify(authSettings))
             settings.set('prediction', JSON.stringify(predictionSettings));
             settings.saveAsync()

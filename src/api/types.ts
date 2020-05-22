@@ -1,7 +1,8 @@
 export type APIAuthReq = {
     instanceUrl: string,
     tokenType: string,
-    accessToken: string
+    accessToken: string,
+    refreshToken: string
 }
 
 export type APIPredictionDef = {
@@ -26,6 +27,11 @@ export type APIGetPredictionReq = {
         columnNames: string[],
         rows: string[][]
     }
+}
+
+export type SDFCResponseError = {
+    errorCode: string,
+    message: string
 }
 
 export type SFDCUser = {
@@ -111,3 +117,15 @@ export type SFDCPredictionResponse = {
         maxPrescriptions: number
     }
 }
+
+export type SFDCAuthRefreshResponse = {
+    access_token: string,
+    id: string,
+    instance_url: string,
+    issued_at: string,
+    scope: string,
+    signature: string,
+    token_type: string
+}
+
+export type SFDCResponse<T> = T | SDFCResponseError[]

@@ -1,10 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Preferences, PreferencesText } from '../types';
+import { Preferences, PreferencesText, PreferencesUiColors } from '../types';
 
 const initPreferences: Preferences = {
     showPrescriptive: false,
     showExplanatory: false,
-    backgroundColor: '#fff',
+    uiColors: {
+        background: '#fff',
+        spinner: 'rgb(97, 101, 112)'
+    },
     textPrimary: {
         sizeInPx: 24,
         weight: 'bold',
@@ -31,10 +34,10 @@ const slicePreferences = createSlice({
                 showExplanatory: action.payload
             }
         },
-        preferencesSetBackgroundColor: (state, action: PayloadAction<string>) => {
+        preferencesSetUiColors: (state, action: PayloadAction<PreferencesUiColors>) => {
             return {
                 ...state,
-                backgroundColor: action.payload
+                uiColors: action.payload
             }
         },
         preferencesSetTextPrimary: (state, action: PayloadAction<PreferencesText>) => {
@@ -50,7 +53,7 @@ export const {
     preferencesUpdateAll, 
     preferencesSetShowPrescriptive, 
     preferencesSetShowExplanatory, 
-    preferencesSetBackgroundColor,
+    preferencesSetUiColors,
     preferencesSetTextPrimary 
 } = slicePreferences.actions;
 
