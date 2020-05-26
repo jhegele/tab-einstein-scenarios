@@ -31,20 +31,25 @@ export const PredictionDefs: React.FC<PredictionDefsProps> = ({ auth, onPredicti
             auth: {
                 accessToken: auth.access_token,
                 tokenType: auth.token_type,
-                instanceUrl: auth.instance_url
+                instanceUrl: auth.instance_url,
+                refreshToken: auth.refresh_token
             }
         })
-            .then(({ data }) => setPredictionDefs(
-                data.predictionDefinitions.map(pd => ({
-                    id: pd.id,
-                    createdBy: pd.createdBy.name,
-                    createdDate: new Date(pd.createdDate),
-                    label: pd.label,
-                    lastModifiedBy: pd.lastModifiedBy.name,
-                    lastModifiedDate: new Date(pd.lastModifiedDate),
-                    url: pd.url,
-                    modelsUrl: pd.modelsUrl
-                } as PredictionDef))
+            .then(({ data }) => (
+                setPredictionDefs(
+                    data.predictionDefinitions
+                        .sort((a, b) => a.label > b.label ? 1 : a.label < b.label ? -1 : 0)
+                        .map(pd => ({
+                            id: pd.id,
+                            createdBy: pd.createdBy.name,
+                            createdDate: new Date(pd.createdDate),
+                            label: pd.label,
+                            lastModifiedBy: pd.lastModifiedBy.name,
+                            lastModifiedDate: new Date(pd.lastModifiedDate),
+                            url: pd.url,
+                            modelsUrl: pd.modelsUrl
+                        } as PredictionDef))
+                )
             ))
     }, [])
 

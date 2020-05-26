@@ -39,6 +39,14 @@ const cssNavContainer = (align: 'left' | 'right') => css`
     width: 100%;
 `;
 
+const cssVersion = css`
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    color: #a0a0a0;
+    padding: 12px;
+`;
+
 interface SetupLayoutProps {
     navFooter?: {
         align?: 'left' | 'right';
@@ -96,6 +104,9 @@ export const LayoutSetup: React.FC<SetupLayoutProps> = ({ children, navFooter, h
                 )
                 : null
             }
+            <div css={cssVersion}>
+                Version {env_APP_VERSION} (ALPHA)
+            </div>
         </div>
     )
 
