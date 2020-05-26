@@ -8,4 +8,4 @@ COPY ./app /app
 
 WORKDIR /app
 
-CMD gunicorn -w 4 --bind 0.0.0.0:$PORT
+CMD gunicorn -w 4 --bind 0.0.0.0:$PORT app:app

@@ -6,11 +6,13 @@ import pusher
 app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_SECRET_KEY')
 
+ENV = os.environ.get('ENV', None)
+
 CONSUMER_KEY = os.environ.get('SFDC_CONSUMER_KEY')
 CONSUMER_SECRET = os.environ.get('SFDC_CONSUMER_SECRET')
 ACCESS_TOKEN_URL = 'https://login.salesforce.com/services/oauth2/token'
 AUTHORIZE_URL = 'https://login.salesforce.com/services/oauth2/authorize'
-REDIRECT_URI = 'http://localhost:5000/auth/callback'
+REDIRECT_URI = 'http://localhost:5000/auth/callback' if ENV == 'development' else 'https://einstein-scenarios.herokuapp.com/auth/callback'
 SCOPES = [
     'api',
     'full',
