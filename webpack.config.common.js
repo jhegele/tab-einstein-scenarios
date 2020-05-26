@@ -1,6 +1,8 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path');
 const APP_PATH = path.resolve(__dirname, './src');
+const webpack = require('webpack');
+const package = require('./package.json');
 
 module.exports = {
     entry: APP_PATH,
@@ -35,5 +37,8 @@ module.exports = {
 
     plugins: [
         new CleanWebpackPlugin(),
+        new webpack.DefinePlugin({
+            'env_APP_VERSION': `"${package.version}"`
+        })
     ]
 };

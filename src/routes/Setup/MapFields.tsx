@@ -44,12 +44,15 @@ export const MapFields: React.FC<MapFieldsProps> = ({ auth, predictionDef, param
     const [ modelFields, setModelFields ] = useState<string[]>();
     const [ mappedFields, setMappedFields ] = useState<MappedFields>([])
 
+    params.sort((a, b) => a.name > b.name ? 1 : a.name < b.name ? -1 : 0);
+
     useEffect(() => {
         getModelDefs({
             auth: {
                 instanceUrl: auth.instance_url,
                 tokenType: auth.token_type,
-                accessToken: auth.access_token
+                accessToken: auth.access_token,
+                refreshToken: auth.refresh_token
             },
             predictionDef: {
                 id: predictionDef.id,

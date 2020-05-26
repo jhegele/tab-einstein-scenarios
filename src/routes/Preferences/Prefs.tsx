@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { css } from '@emotion/core';
 import { Preferences, PreferencesTextWeights } from '../../store/types';
 import { Loading } from '../../components';
-import { TextField, DropdownSelect, Button } from '@tableau/tableau-ui';
+import { TextField, DropdownSelect, Button, Checkbox } from '@tableau/tableau-ui';
 import { ColorPicker } from '../../components';
 import numeral from 'numeral';
 
@@ -103,6 +103,9 @@ export const Prefs: React.FC = () => {
 
     const [ prefs, setPrefs ] = useState<Preferences>();
     const [ sampleText, setSampleText ] = useState<string>('0.5');
+    const [ showThousandsSeparator, setShowThousandsSeparator ] = useState<boolean>(true);
+    const [ decimalPlaces, setDecimalPlaces ] = useState<number>(2);
+    const [ isPercentage, setIsPercentage ] = useState<boolean>(false);
 
     useEffect(() => {
         extensions.initializeDialogAsync()
@@ -111,8 +114,27 @@ export const Prefs: React.FC = () => {
             })
     }, [])
 
+    useEffect(() => {
+        if (prefs) {
+            setPrefs((curr) => ({...curr!, textPrimary: { ...curr!.textPrimary, numberFormatting: buildNumberFormattingString() }}))
+        }
+    }, [showThousandsSeparator, decimalPlaces, isPercentage])
+
     const handleDone = () => {
         extensions.ui.closeDialog(JSON.stringify(prefs));
+    }
+
+    const buildNumberFormattingString = (): string => {
+        let numFormat: string = '0';
+        if (showThousandsSeparator) numFormat = '0,0';
+        if (decimalPlaces > 0) {
+            numFormat += '.'
+            for (let i: number = 0; i < decimalPlaces; i++) {
+                numFormat += '0'
+            }
+        }
+        if (isPercentage) numFormat += '%';
+        return numFormat;
     }
 
     if (!prefs) return <Loading />
@@ -197,10 +219,22 @@ export const Prefs: React.FC = () => {
                     />
                     <TextField
                         kind='line'
-                        label='Number Formatting'
-                        value={prefs.textPrimary.numberFormatting}
-                        onChange={({ target: { value }}) => setPrefs((curr) => ({...curr!, textPrimary: { ...curr!.textPrimary, numberFormatting: value }}))}
+                        label='Decimal Places'
+                        value={decimalPlaces.toString()}
+                        onChange={({ target: { value }}) => setDecimalPlaces(parseInt(value))}
                     />
+                    <Checkbox
+                        checked={showThousandsSeparator}
+                        onChange={({ target: { checked }}) => setShowThousandsSeparator(checked)}
+                    >
+                        Thousands Separator
+                    </Checkbox>
+                    <Checkbox
+                        checked={isPercentage}
+                        onChange={({ target: { checked }}) => setIsPercentage(checked)}
+                    >
+                        Percentage
+                    </Checkbox>
                 </div>
             </div>
         </div>
