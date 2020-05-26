@@ -7,7 +7,7 @@ const sliceAuth = createSlice({
     name: 'auth',
     initialState: initAuth,
     reducers: {
-        authUpdate: (state, action: PayloadAction<Auth>) => {
+        authUpdate: (_state, action: PayloadAction<Auth>) => {
             return action.payload;
         },
         authSetRefreshToken: (state, action: PayloadAction<string>) => {

@@ -19,7 +19,7 @@ export const Predict: React.FC = () => {
     if (!extensions.dashboardContent.dashboard) throw 'Error: dashboard object not found in dashboardContent object!'
     const { dashboard } = extensions.dashboardContent;
 
-    const { auth, prediction, preferences } = useSelector(
+    const { auth, prediction } = useSelector(
         (state: RootState) => state,
         shallowEqual
     )
