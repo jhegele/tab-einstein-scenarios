@@ -76,18 +76,15 @@ export const Explain: React.FC<ExplainProps> = ({ prediction, prefsOverride }) =
                     <th>Explanation</th>
                 </tr>
             </thead>
-            <tbody
-                css={css`
-                    &:not(:last-child) {
-                        border-bottom: 1px solid ${prefs.global.textColor};
-                    }
-                `}
-            >
+            <tbody>
                 {middleValues.map((mv, idx) => (
                     <tr 
-                        css={css`
-                            & > td {border-bottom: 1px dotted ${prefs.global.textColor}};
-                        `}
+                        css={idx < middleValues.length - 1 
+                            ? css`
+                                & > td {border-bottom: 1px dotted ${prefs.global.textColor}};
+                            `
+                            : null
+                        }
                         key={`pred.mv.${idx}`}
                     >
                         <td>
