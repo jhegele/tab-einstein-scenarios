@@ -1,3 +1,3 @@
-# Tableau Extension - Einstein "What If?"
+# Einstein Scenarios for Tableau
 
-A Tableau extension that allows "what if" style analysis powered by Einstein Discovery's predictive models.
+A Tableau extension that allows "what if" style scenario analysis powered by Einstein Discovery's predictive models.
