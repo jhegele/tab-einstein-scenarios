@@ -26,7 +26,7 @@ export const Predict: React.FC = () => {
     if (!extensions.dashboardContent.dashboard) throw 'Error: dashboard object not found in dashboardContent object!'
     const { dashboard } = extensions.dashboardContent;
 
-    const { auth, prediction, preferences, extension: { predictionResponse } } = useSelector(
+    const { auth, prediction, extension: { predictionResponse } } = useSelector(
         (state: RootState) => state,
         shallowEqual
     )
@@ -129,7 +129,6 @@ export const Predict: React.FC = () => {
 
     return (
         <LayoutExtension
-            prefs={preferences}
             showToolbar={extensions.environment.mode === 'authoring'}
             pages={[
                 {
