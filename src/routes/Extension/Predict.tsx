@@ -2,27 +2,37 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import { RootState } from '../../store';
 import { getPrediction } from '../../api';
-import { Loading } from '../../components';
+import { Loading, LayoutExtension } from '../../components';
 import { ParameterChangedEvent } from '@tableau/extensions-api-types';
-import { PredictDisplay } from './PredictDisplay';
-import { SFDCPredictionResponse } from '../../api/types';
+import { Prediction } from './Pages/Prediction';
+import { Explain } from './Pages/Explain';
+// import { SFDCPredictionResponse } from '../../api/types';
+import { useDispatch } from 'react-redux';
+import { extensionSetPredictionResponse } from '../../store/slices/extension';
+import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
+
+type PredictionPages = 'predict' | 'explain' | 'action';
 
 export const Predict: React.FC = () => {
 
     const [ ready, setReady ] = useState<boolean>(false);
     const [ loading, setLoading ] = useState<boolean>(false);
     const [ paramValues, setParamValues ] = useState<{[key: string]: any}>({});
-    const [ predictionResponse, setPredictionResponse ] = useState<SFDCPredictionResponse>();
+    const [ activePage, setActivePage ] = useState<PredictionPages>('predict');
+    // const [ predictionResponse, setPredictionResponse ] = useState<SFDCPredictionResponse>();
 
     const { extensions } = window.tableau;
     if (!extensions.dashboardContent) throw 'Error: dashboardContent not found in extensions object!';
     if (!extensions.dashboardContent.dashboard) throw 'Error: dashboard object not found in dashboardContent object!'
     const { dashboard } = extensions.dashboardContent;
 
-    const { auth, prediction } = useSelector(
+    const { auth, prediction, preferences, extension: { predictionResponse } } = useSelector(
         (state: RootState) => state,
         shallowEqual
     )
+    const dispatch = useDispatch();
+    const location = useLocation();
+    const history = useHistory();
 
     if (!prediction.mappedFields) throw 'Error: no mapped fields found in settings!'
 
@@ -76,9 +86,26 @@ export const Predict: React.FC = () => {
         })
             .then((predictionResponse) => {
                 console.log(predictionResponse);
-                setPredictionResponse(predictionResponse);
+                dispatch(extensionSetPredictionResponse(predictionResponse));
                 setLoading(false);
             })
+    }
+
+    const handlePageChange = (newPage: PredictionPages): void => {
+        let path: string;
+        switch (newPage) {
+            case 'predict':
+                path = '/';
+                break;
+            case 'explain':
+                path = '/explain';
+                break;
+            case 'action':
+                path = '/action';
+                break;
+        }
+        setActivePage(newPage);
+        if (location.pathname !== path) history.push(path);
     }
 
     useEffect(() => {
@@ -101,9 +128,31 @@ export const Predict: React.FC = () => {
     if (loading || !ready || !predictionResponse) return <Loading />
 
     return (
-        <PredictDisplay 
-            prediction={predictionResponse}
-        />
+        <LayoutExtension
+            prefs={preferences}
+            showToolbar={extensions.environment.mode === 'authoring'}
+            pages={[
+                {
+                    name: 'Predict',
+                    onClick: () => handlePageChange('predict'),
+                    active: activePage === 'predict'
+                },
+                {
+                    name: 'Explain',
+                    onClick: () => handlePageChange('explain'),
+                    active: activePage === 'explain'
+                }
+            ]}
+        >
+            <Switch>
+                <Route path='/' exact>
+                    <Prediction prediction={predictionResponse} />
+                </Route>
+                <Route path='/explain'>
+                    <Explain prediction={predictionResponse} />
+                </Route>
+            </Switch>
+        </LayoutExtension>
     )
 
 }

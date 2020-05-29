@@ -59,9 +59,6 @@ const App: React.FC = () => {
             <Global styles={resets} />
             <Router>
                 <Switch>
-                    <Route path='/' exact>
-                        <Extension />
-                    </Route>
                     <Route path='/setup'>
                         <Setup />
                     </Route>
@@ -70,6 +67,9 @@ const App: React.FC = () => {
                     </Route>
                     <Route path='/auth/confirm'>
                         <WebAuthConfirm />
+                    </Route>
+                    <Route path='/'>
+                        <Extension />
                     </Route>
                 </Switch>
             </Router>

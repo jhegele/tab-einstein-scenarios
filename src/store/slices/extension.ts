@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Extension } from '../types';
+import { SFDCPredictionResponse } from '../../api/types';
 
 const initExtension: Extension = {
     initialized: false,
@@ -21,10 +22,16 @@ const sliceExtension = createSlice({
                 ...state,
                 setupComplete: action.payload
             }
+        },
+        extensionSetPredictionResponse: (state, action: PayloadAction<SFDCPredictionResponse>) => {
+            return {
+                ...state,
+                predictionResponse: action.payload
+            }
         }
     }
 });
 
-export const { extensionSetInitialized, extensionSetSetupComplete } = sliceExtension.actions;
+export const { extensionSetInitialized, extensionSetSetupComplete, extensionSetPredictionResponse } = sliceExtension.actions;
 
 export default sliceExtension.reducer;
