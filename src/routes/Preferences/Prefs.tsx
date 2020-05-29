@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { PreferencesLayout } from '../../components/Layouts/Preferences';
 import { GlobalPrefsContent, GlobalPrefsControls } from './Pages/Global';
 import { PredictPrefsContent, PredictPrefsControls } from './Pages/Predict';
+import { ExplainPrefsContent, ExplainPrefsControls } from './Pages/Explain';
 import { Switch, Route, useHistory, useLocation } from 'react-router-dom';
 import { Preferences } from '../../store/types';
 import { SFDCPredictionResponse } from '../../api/types';
@@ -42,10 +43,14 @@ export const Prefs: React.FC = () => {
 
     if (!prefs || !prediction || !prefsType) return <Loading />
 
-    const { global: globalPrefs, predict: predictPrefs } = prefs;
+    const handleDone = () => {
+        extensions.ui.closeDialog(JSON.stringify(prefs));
+    }
+
+    const { global: globalPrefs, predict: predictPrefs, explain: explainPrefs } = prefs;
     
     const sharedPropsLayout = {
-        onDone: () => console.log('DONE'),
+        onDone: handleDone,
         settingsType: prefsType,
         onSettingsTypeChange: (settingsType: keyof Preferences) => setPrefsType(settingsType),
         globalPrefs: globalPrefs
@@ -77,6 +82,22 @@ export const Prefs: React.FC = () => {
                     {...sharedPropsLayout}
                 >
                     <PredictPrefsContent 
+                        prediction={prediction}
+                        prefs={prefs}
+                    />
+                </PreferencesLayout>
+            </Route>
+            <Route path='/prefs/explain'>
+                <PreferencesLayout
+                    controls={
+                        <ExplainPrefsControls
+                            explainPrefs={explainPrefs}
+                            onSettingChanged={newPredictPrefs => setPrefs(curr => ({...curr!, explain: newPredictPrefs}))}
+                        />
+                    }
+                    {...sharedPropsLayout}
+                >
+                    <ExplainPrefsContent
                         prediction={prediction}
                         prefs={prefs}
                     />

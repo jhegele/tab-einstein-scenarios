@@ -34,6 +34,15 @@ const cssHeaderControlsContainer = css`
     margin-right: 20px;
 `;
 
+const cssSubHeaderContainer = css`
+    display: flex;
+    flex-direction: row;
+    height: 35px;
+    background-color: #afc4d2;
+    color: #333;
+    align-items: center;
+`;
+
 const cssContentContainer = css`
     flex: 1;
     display: flex;
@@ -49,7 +58,7 @@ const cssControlsContainer = css`
     min-width: 200px;
     overflow: auto;
     padding: 10px;
-    > div {
+    > * {
         margin-bottom: 15px;
     }
     > input {
@@ -81,22 +90,6 @@ export const PreferencesLayout: React.FC<PreferencesLayoutProps> = ({
                     Configure Preferences
                 </div>
                 <div css={cssHeaderControlsContainer}>
-                    <div
-                        css={css`
-                            line-height: 12px;
-                            margin-right: 20px;
-                        `}
-                    >
-                        <DropdownSelect
-                            kind='line'
-                            value={settingsType}
-                            onChange={({ target: { value }}) => onSettingsTypeChange(value as keyof Preferences)}
-                        >
-                            <option value='global'>Global</option>
-                            <option value='predict'>Predict</option>
-                            <option value='explain'>Explain</option>
-                        </DropdownSelect>
-                    </div>
                     <Button
                         kind='primary'
                         onClick={onDone}
@@ -105,10 +98,34 @@ export const PreferencesLayout: React.FC<PreferencesLayoutProps> = ({
                     </Button>
                 </div>
             </div>
+            <div css={cssSubHeaderContainer}>
+                <div
+                    css={css`
+                        margin-left: 20px;
+                    `}
+                >
+                    Select settings to configure:
+                </div>
+                <div
+                    css={css`
+                        margin-left: 10px;
+                    `}
+                >
+                    <DropdownSelect
+                        kind='line'
+                        value={settingsType}
+                        onChange={({ target: { value }}) => onSettingsTypeChange(value as keyof Preferences)}
+                    >
+                        <option value='global'>Global</option>
+                        <option value='predict'>Predict</option>
+                        <option value='explain'>Explain</option>
+                    </DropdownSelect>
+                </div>
+            </div>
             <div css={cssContentContainer}>
                 <div
                     css={css`
-                        flex: 3;
+                        flex: 2;
                         display: flex;
                         justify-content: center;
                         align-items: center;

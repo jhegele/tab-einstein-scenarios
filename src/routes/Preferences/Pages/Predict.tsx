@@ -84,6 +84,8 @@ export const PredictPrefsControls: React.FC<PredictPrefsControlsProps> = ({
                 value={predictPrefs.suffix ? predictPrefs.suffix : ''}
             />
             <DropdownSelect
+                kind='line'
+                label='Decimal Places'
                 value={numDecimalPlaces.toString()}
                 onChange={({ target: { value } }) => setNumDecimalPlaces(parseInt(value))}
             >

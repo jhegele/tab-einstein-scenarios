@@ -28,8 +28,8 @@ export const Explain: React.FC<ExplainProps> = ({ prediction, prefsOverride }) =
         const reRange: RegExp = /(\d(?:\.?\d*)?) to (\d(?:\.?\d*)?)/;
         const matchRange = col.columnValue.match(reRange);
         if (matchRange) {
-            const rangeMin: string = numeral(parseFloat(matchRange[1])).format(preferences.explain.explanationNumberFormatting);
-            const rangeMax: string = numeral(parseFloat(matchRange[2])).format(preferences.explain.explanationNumberFormatting)
+            const rangeMin: string = numeral(parseFloat(matchRange[1])).format(prefs.explain.explanationNumberFormatting);
+            const rangeMax: string = numeral(parseFloat(matchRange[2])).format(prefs.explain.explanationNumberFormatting)
             return `${col.columnName} is between ${rangeMin} and ${rangeMax}${appendAnd ? ' &' : ''}`;
         }
 
@@ -37,8 +37,8 @@ export const Explain: React.FC<ExplainProps> = ({ prediction, prefsOverride }) =
         return `${col.columnName} is ${col.columnValue}${appendAnd ? ' &' : ''}`;
     }
 
-    const upArrow = <ArrowIcon variant='up' color={preferences.explain.arrowUpColor} />
-    const downArrow = <ArrowIcon variant='down' color={preferences.explain.arrowDownColor} />
+    const upArrow = <ArrowIcon variant='up' color={prefs.explain.arrowUpColor} />
+    const downArrow = <ArrowIcon variant='down' color={prefs.explain.arrowDownColor} />
 
     const { middleValues } = prediction.predictions[0].prediction;
 
@@ -48,21 +48,21 @@ export const Explain: React.FC<ExplainProps> = ({ prediction, prefsOverride }) =
                 width: 90%;
                 border-collapse: collapse;
                 & > * td {
-                    font-size: ${preferences.explain.textBodySizeInPx}px;
-                    font-weight: ${preferences.explain.textBodyWeight};
-                    color: ${preferences.global.textColor};
+                    font-size: ${prefs.explain.textBodySizeInPx}px;
+                    font-weight: ${prefs.explain.textBodyWeight};
+                    color: ${prefs.global.textColor};
                 }
                 & > * th {
-                    font-size: ${preferences.explain.textHeaderSizeInPx}px;
-                    font-weight: ${preferences.explain.textHeaderWeight};
-                    color: ${preferences.global.textColor};
+                    font-size: ${prefs.explain.textHeaderSizeInPx}px;
+                    font-weight: ${prefs.explain.textHeaderWeight};
+                    color: ${prefs.global.textColor};
                 }
             `}
         >
             <thead>
                 <tr
                     css={css`
-                        & > th {border-bottom: 2px solid ${preferences.global.textColor}};
+                        & > th {border-bottom: 2px solid ${prefs.global.textColor}};
                     `}
                 >
                     <th>&nbsp;</th>
@@ -79,7 +79,7 @@ export const Explain: React.FC<ExplainProps> = ({ prediction, prefsOverride }) =
             <tbody
                 css={css`
                     &:not(:last-child) {
-                        border-bottom: 1px solid ${preferences.global.textColor};
+                        border-bottom: 1px solid ${prefs.global.textColor};
                     }
                 `}
             >

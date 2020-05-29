@@ -18,23 +18,11 @@ const initPreferences: Preferences = {
         textHeaderWeight: 'bold',
         textBodySizeInPx: 12,
         textBodyWeight: 'normal',
-        arrowUpColor: '',
-        arrowDownColor: '',
+        arrowUpColor: '#00a370',
+        arrowDownColor: '#fb505e',
         valueNumberFormatting: '0,0.00',
         explanationNumberFormatting: '0,0.00'
     }
-    // showPrescriptive: false,
-    // showExplanatory: false,
-    // uiColors: {
-    //     background: '#fff',
-    //     spinner: 'rgb(97, 101, 112)'
-    // },
-    // textPrimary: {
-    //     sizeInPx: 24,
-    //     weight: 'bold',
-    //     color: '#333',
-    //     numberFormatting: '0,0.00'
-    // }
 }
 
 const slicePreferences = createSlice({
@@ -56,31 +44,6 @@ const slicePreferences = createSlice({
             state.explain = action.payload;
             return state;
         }
-
-        // preferencesSetShowPrescriptive: (state, action: PayloadAction<boolean>) => {
-        //     return {
-        //         ...state,
-        //         showPrescriptive: action.payload
-        //     }
-        // },
-        // preferencesSetShowExplanatory: (state, action: PayloadAction<boolean>) => {
-        //     return {
-        //         ...state,
-        //         showExplanatory: action.payload
-        //     }
-        // },
-        // preferencesSetUiColors: (state, action: PayloadAction<PreferencesUiColors>) => {
-        //     return {
-        //         ...state,
-        //         uiColors: action.payload
-        //     }
-        // },
-        // preferencesSetTextPrimary: (state, action: PayloadAction<PreferencesText>) => {
-        //     return {
-        //         ...state,
-        //         textPrimary: action.payload
-        //     }
-        // }
     }
 });
 
