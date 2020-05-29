@@ -86,7 +86,7 @@ export const Explain: React.FC<ExplainProps> = ({ prediction, prefsOverride }) =
                 {middleValues.map((mv, idx) => (
                     <tr 
                         css={css`
-                            & > td {border-bottom: 1px dotted #333};
+                            & > td {border-bottom: 1px dotted ${prefs.global.textColor}};
                         `}
                         key={`pred.mv.${idx}`}
                     >
