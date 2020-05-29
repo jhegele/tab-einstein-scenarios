@@ -38,15 +38,15 @@ const cssSpinnerStyle = (color: string) => css`
 
 export const Loading: React.FC = () => {
 
-    const { textPrimary, uiColors } = useSelector(
+    const { global: { backgroundColor, textColor} } = useSelector(
         (state: RootState) => state.preferences
     )
 
     return (
         <div
-            css={cssOuterContainer(uiColors.background)}
+            css={cssOuterContainer(backgroundColor)}
         >
-            <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" css={cssSpinnerStyle(textPrimary.color)}>
+            <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" css={cssSpinnerStyle(textColor)}>
                 <linearGradient id="fade" x2="50" y1="25" y2="25" gradientUnits="userSpaceOnUse">
                     <stop offset="0" stopOpacity="0"/>
                     <stop offset=".15" stopOpacity=".04"/>

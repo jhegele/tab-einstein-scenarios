@@ -28,11 +28,14 @@ export const Extension: React.FC = () => {
     const history = useHistory();
 
     const syncSettingsWithRedux = (settings: ExtensionSettings): { [key in keyof ExtensionSettings]: boolean } => {
+        // initialize settings states to false and set to true only if the
+        // object exists
         let settingsState: { [key in keyof ExtensionSettings]: boolean } = {
             auth: false,
             prediction: false,
             preferences: false
         }
+        // for each object in settings, if it exists, parse it to JSON and load to redux
         if (settings.auth) {
             const auth: Auth = JSON.parse(settings.auth!);
             dispatch(authUpdate(auth));
@@ -57,38 +60,36 @@ export const Extension: React.FC = () => {
         await extensions.settings.saveAsync()
     }
 
+    const handleLoadSettings = (): void => {
+        // get existing settings from extension object and load them to redux
+        const settings: ExtensionSettings = extensions.settings.getAll();
+        const { auth, prediction } = syncSettingsWithRedux(settings);
+        // if we don't already have preferences set, add them using defaults
+        if (!settings.preferences) {
+            loadPrefsToSettings()
+                .then(() => {
+                    // the auth or prediction objects don't exist in settings,
+                    // we need to send the user through the setup flow
+                    if (!auth || !prediction) history.push('/setup');
+                    else console.log('EXTENSION INITIALIZED AND SETTINGS LOADED!');
+                })
+        } else {
+            if (!auth || !prediction) history.push('/setup');
+            else console.log('EXTENSION INITIALIZED AND SETTINGS LOADED!');
+        }
+    }
+
     useEffect(() => {
+        // make sure the extension is properly initialized
         if (!initialized) {
             extensions.initializeAsync()
                 .then(() => {
                     dispatch(extensionSetInitialized(true));
-                    const settings: ExtensionSettings = extensions.settings.getAll();
-                    const { auth, prediction } = syncSettingsWithRedux(settings)
-                    if (!settings.preferences) {
-                        loadPrefsToSettings()
-                            .then(() => {
-                                if (!auth || !prediction) history.push('/setup');
-                                else console.log('EXTENSION INITIALIZED AND SETTINGS LOADED!');
-                            })
-                    } else {
-                        if (!auth || !prediction) history.push('/setup');
-                        else console.log('EXTENSION INITIALIZED AND SETTINGS LOADED!');
-                    }
-                    
+                    // get existing settings from extension object and load them to redux
+                    handleLoadSettings();
                 })
         } else {
-            const settings: ExtensionSettings = extensions.settings.getAll();
-            const { auth, prediction } = syncSettingsWithRedux(settings);
-            if (!settings.preferences) {
-                loadPrefsToSettings()
-                    .then(() => {
-                        if (!auth || !prediction) history.push('/setup');
-                        else console.log('EXTENSION INITIALIZED AND SETTINGS LOADED!');
-                    })
-            } else {
-                if (!auth || !prediction) history.push('/setup');
-                else console.log('EXTENSION INITIALIZED AND SETTINGS LOADED!');
-            }
+            handleLoadSettings();
         }
     }, []);
 
