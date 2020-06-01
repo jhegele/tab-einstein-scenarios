@@ -22,6 +22,10 @@ Tableau Extensions are really, really cool things that allow you to add super co
 
 Extensions, in Tableau, are basically web applications that can run inside your dashboard and are granted certain special permissions to interact with the dashboard. This **does not** necessarily mean that an extension has access to everything in your dashboard (though it _could_ have that level of access). By default, extensions are granted access to the Summary Data in Tableau (if you are a Tableau Creator, open a dashboard, right click on a worksheet, and choose View Data -- there are two tabs at the bottom, Summary Data and Full Data, extensions have access to Summary Data _only_ by default).
 
+## When I use this extension and go through the Salesforce authentication for the first time, it asks for a lot of permissions. Why?
+
+Yeah, that will eventually change. Honestly, I did that just to make life easier for me as I'm developing this. I've open sourced all of the code to provide full transparency around what this extension does. So, I'm definitely _not_ looking to gather any data or anything like that. I just requested full permissions because it makes it easier to focus on UI and functionality issues rather than permissions issues. Once this is stable, I'll update to request the minimum necessary permissions.
+
 ## So, wait, if I'm loading a webpage in my dashboard, are you sending my data somewhere?
 
 Well, the short answer is, "yes, I'm sending the values from the parameters that you mapped to the web application I built which is running on Heroku". Heroku is a very widely used web services company that is also owned by Salesforce (so, for me, it's a pretty handy spot to deploy something like this).
