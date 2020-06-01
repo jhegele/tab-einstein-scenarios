@@ -105,7 +105,7 @@ export const LayoutSetup: React.FC<SetupLayoutProps> = ({ children, navFooter, h
                 : null
             }
             <div css={cssVersion}>
-                Version {env_APP_VERSION} (ALPHA)
+                Version {env_APP_VERSION} (BETA)
             </div>
         </div>
     )

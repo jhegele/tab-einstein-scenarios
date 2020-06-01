@@ -1,12 +1,11 @@
 {
   "name": "tab-ext-einstein-scenarios",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A Tableau extension that allows \"what if\" style scenario analysis powered by Einstein Discovery's predictive models.",
   "main": "index.js",
-  "repository": "git@github.com:jhegele/tab-einstein-what-if.git",
+  "repository": "git@github.com:jhegele/tab-einstein-scenarios.git",
   "author": "John Hegele",
   "license": "MIT",
-  "private": true,
   "scripts": {
     "py:make-requirements": "pip freeze > ./app/requirements.txt",
     "ts:check-types": "npx tsc --noEmit --skipLibCheck",
@@ -54,6 +53,7 @@
     "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.5.3",
+    "docsify-cli": "^4.4.0",
     "file-loader": "^6.0.0",
     "style-loader": "^1.2.1",
     "typescript": "^3.9.2",
