@@ -4,7 +4,7 @@ A Tableau extension that allows "what if" style scenario analysis powered by Ein
 
 ## Documentation
 
-Full documentation available at TBD
+Full documentation available at https://jhegele.github.io/tab-einstein-scenarios/
 
 ## Get the Extension
 
