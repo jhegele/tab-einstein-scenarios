@@ -4,6 +4,7 @@ import Pusher from 'pusher-js';
 import type { SFDCAuthResponse, DashboardParams } from './types';
 import { LayoutSetup } from '../../components';
 import { css } from '@emotion/core';
+import { v4 as uuid } from 'uuid';
 
 const cssDescription = css`
     width: calc(100% - 40px);
@@ -20,6 +21,8 @@ const pusher = new Pusher('d3f79d8864d956248414', {
     forceTLS: true
 });
 
+const channelId = uuid();
+
 interface AuthenticateProps {
     onAuthenticated: (authResponse: SFDCAuthResponse, dashboardParams: DashboardParams) => any;
 }
@@ -33,7 +36,7 @@ export const Authenticate: React.FC<AuthenticateProps> = ({ onAuthenticated }) =
 
     useEffect(() => {
         const channel = pusher.subscribe('sfdc-auth');
-        channel.bind('get-auth', (authResponse: SFDCAuthResponse) => {
+        channel.bind(channelId, (authResponse: SFDCAuthResponse) => {
             setAuth(authResponse);
         })
         extensions.initializeDialogAsync()
@@ -50,7 +53,7 @@ export const Authenticate: React.FC<AuthenticateProps> = ({ onAuthenticated }) =
     }, [auth, params])
 
     const ejectToBrowserForAuth = () => {
-        window.open(`${window.location.origin}/auth`, '_blank');
+        window.open(`${window.location.origin}/auth/${channelId}`, '_blank');
     }
 
     return (

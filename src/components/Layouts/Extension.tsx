@@ -57,7 +57,7 @@ const cssToolbar = css`
     right: 0;
 `;
 
-interface LayoutExtensionProps {
+export interface LayoutExtensionProps {
     showToolbar?: boolean;
     loading?: boolean;
     pages?: {

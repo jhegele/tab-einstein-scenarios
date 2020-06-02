@@ -3,10 +3,10 @@ import { useSelector, shallowEqual } from 'react-redux';
 import { RootState } from '../../store';
 import { getPrediction } from '../../api';
 import { Loading, LayoutExtension } from '../../components';
+import type { LayoutExtensionProps } from '../../components/Layouts/Extension';
 import { ParameterChangedEvent } from '@tableau/extensions-api-types';
 import { Prediction } from './Pages/Prediction';
 import { Explain } from './Pages/Explain';
-// import { SFDCPredictionResponse } from '../../api/types';
 import { useDispatch } from 'react-redux';
 import { extensionSetPredictionResponse } from '../../store/slices/extension';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
@@ -19,7 +19,6 @@ export const Predict: React.FC = () => {
     const [ loading, setLoading ] = useState<boolean>(false);
     const [ paramValues, setParamValues ] = useState<{[key: string]: any}>({});
     const [ activePage, setActivePage ] = useState<PredictionPages>('predict');
-    // const [ predictionResponse, setPredictionResponse ] = useState<SFDCPredictionResponse>();
 
     const { extensions } = window.tableau;
     if (!extensions.dashboardContent) throw 'Error: dashboardContent not found in extensions object!';
@@ -127,21 +126,28 @@ export const Predict: React.FC = () => {
 
     if (loading || !ready || !predictionResponse) return <Loading />
 
+    const layoutProps: LayoutExtensionProps = {
+        showToolbar: extensions.environment.mode === 'authoring',
+    }
+    const explanationExists = predictionResponse.predictions[0].prediction.middleValues.length > 0;
+    // const prescriptiveExists = predictionResponse.predictions[0].prescriptions.length > 0;
+
+    if (explanationExists) {
+        layoutProps.pages = [{
+            name: 'Predict',
+            onClick: () => handlePageChange('predict'),
+            active: activePage === 'predict'
+        }]
+        if (explanationExists) layoutProps.pages.push({
+            name: 'Explain',
+            onClick: () => handlePageChange('explain'),
+            active: activePage === 'explain'
+        })
+    }
+
     return (
         <LayoutExtension
-            showToolbar={extensions.environment.mode === 'authoring'}
-            pages={[
-                {
-                    name: 'Predict',
-                    onClick: () => handlePageChange('predict'),
-                    active: activePage === 'predict'
-                },
-                {
-                    name: 'Explain',
-                    onClick: () => handlePageChange('explain'),
-                    active: activePage === 'explain'
-                }
-            ]}
+            {...layoutProps}
         >
             <Switch>
                 <Route path='/' exact>
