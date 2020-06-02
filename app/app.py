@@ -21,8 +21,10 @@ SCOPES = [
 
 PUSHER_SECRET = os.environ.get('PUSHER_SECRET')
 
-@app.route('/auth')
-def auth():
+@app.route('/auth/<channel_id>')
+def auth(channel_id):
+    session['channel_id'] = channel_id
+    print('Set channel id as: ', channel_id)
     url = '{}?response_type=code&client_id={}&redirect_uri={}&scope={}'.format(
         AUTHORIZE_URL,
         CONSUMER_KEY,
@@ -50,7 +52,8 @@ def auth_callback():
         cluster='us2',
         ssl=True
     )
-    pusher_client.trigger('sfdc-auth', 'get-auth', resp)
+    print('Responding using channel id: ', session['channel_id'])
+    pusher_client.trigger('sfdc-auth', session['channel_id'], resp)
     return redirect(url_for('auth_confirm'))
 
 @app.route('/auth/confirm')

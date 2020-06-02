@@ -93,6 +93,11 @@ export type SFDCColumn = {
     columnValue: string
 }
 
+export type SFDCPrescription = {
+    value: number,
+    columns: SFDCColumn[]
+}
+
 export type SFDCPrediction = {
     prediction: {
         baseLine: number,
@@ -106,7 +111,7 @@ export type SFDCPrediction = {
         smallTermCount: number,
         total: number;
     },
-    prescriptions: any[],
+    prescriptions: SFDCPrescription[],
     status: string
 }
 
