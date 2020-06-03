@@ -41,6 +41,7 @@ export const Setup: React.FC = () => {
     }
 
     const handleAuthenticated = (auth: SFDCAuthResponse, params: DashboardParams) => {
+        console.log('AUTH: ', auth);
         setAuth(auth);
         setParams(params);
     }
