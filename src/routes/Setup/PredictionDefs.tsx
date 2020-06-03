@@ -15,14 +15,6 @@ const cssDescription = css`
     padding: 20px;
 `;
 
-const cssError = css`
-    width: calc(100% - 40px);
-    border: 2px solid #fb505e;
-    border-radius: 5px;
-    background-color: #ffebed;
-    padding: 20px;
-`;
-
 interface PredictionDefsProps {
     auth: SFDCAuthResponse;
     onPredictionDefSelected: (def: PredictionDef) => any;
