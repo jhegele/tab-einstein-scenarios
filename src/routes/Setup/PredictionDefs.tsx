@@ -15,6 +15,14 @@ const cssDescription = css`
     padding: 20px;
 `;
 
+const cssError = css`
+    width: calc(100% - 40px);
+    border: 2px solid #fb505e;
+    border-radius: 5px;
+    background-color: #ffebed;
+    padding: 20px;
+`;
+
 interface PredictionDefsProps {
     auth: SFDCAuthResponse;
     onPredictionDefSelected: (def: PredictionDef) => any;
@@ -23,7 +31,7 @@ interface PredictionDefsProps {
 
 export const PredictionDefs: React.FC<PredictionDefsProps> = ({ auth, onPredictionDefSelected, onBack }) => {
 
-    const [ predictionDefs, setPredictionDefs ] = useState<PredictionDef[]>()
+    const [ predictionDefs, setPredictionDefs ] = useState<PredictionDef[]>();
     const [ selectedDef, setSelectedDef ] = useState<PredictionDef>();
 
     useEffect(() => {
@@ -54,10 +62,17 @@ export const PredictionDefs: React.FC<PredictionDefsProps> = ({ auth, onPredicti
     }, [])
 
     useEffect(() => {
-        if (predictionDefs && predictionDefs.length > 0) setSelectedDef(predictionDefs[0]);
+        console.log('PREDICTION DEFS: ', predictionDefs);
+        if (predictionDefs) {
+            if (predictionDefs.length > 0) {
+                setSelectedDef(predictionDefs[0]);
+            } else {
+                alert('No prediction definitions were found in your Einstein account! You must deploy your model and the model must show up in Model Manager before you\'ll be able to use this extension.');
+            }
+        }
     }, [predictionDefs])
 
-    if (!predictionDefs || !selectedDef) return <Loading />
+    if (!predictionDefs) return <Loading />
 
     const handleSelect = (id: string) => {
         const matchPredictionDef = predictionDefs.filter(pd => pd.id === id);
@@ -79,10 +94,11 @@ export const PredictionDefs: React.FC<PredictionDefsProps> = ({ auth, onPredicti
                     <React.Fragment>
                         <Button
                             kind='primary'
-                            onClick={() => onPredictionDefSelected(selectedDef)}
+                            onClick={() => selectedDef ? onPredictionDefSelected(selectedDef) : null}
                             css={css`
                                 margin-right: 20px;
                             `}
+                            disabled={!selectedDef}
                         >
                             Next
                         </Button>
@@ -111,7 +127,7 @@ export const PredictionDefs: React.FC<PredictionDefsProps> = ({ auth, onPredicti
                 `}
             >
                 <DropdownSelect
-                    value={selectedDef.id}
+                    value={selectedDef?.id || ''}
                     onChange={({ target: { value } }) => handleSelect(value)}
                     label='Einstein Prediction Definition'
                     kind='line'
