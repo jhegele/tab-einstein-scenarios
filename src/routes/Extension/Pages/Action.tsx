@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import type { SFDCPredictionResponse, SFDCColumn, SFDCPrescription } from '../../../api/types';
 import { useSelector, shallowEqual } from 'react-redux'
 import { RootState } from '../../../store';
 import numeral from 'numeral';
 import { Preferences } from '../../../store/types';
+import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
+import { css } from '@emotion/core';
 
 interface ActionProps {
     prediction: SFDCPredictionResponse;
@@ -11,6 +13,19 @@ interface ActionProps {
 }
 
 export const Action: React.FC<ActionProps> = ({ prediction, prefsOverride }) => {
+
+    const [ selected, setSelected ] = useState<number>();
+    const [ prescriptions, setPrescriptions ] = useState<React.ReactNode[]>([]);
+
+    useEffect(() => {   
+        const { prescriptions: prescriptionsData } = prediction.predictions[0];
+        if (prescriptionsData.length > 0) {
+            setPrescriptions(prescriptionsData.map(p => prescriptionToNarrative(p)));
+            setSelected(0);
+        } else {
+            console.log('Einstein sent back no prescriptive info.')
+        }
+    }, [])
 
     const preferences = useSelector(
         (state: RootState) => state.preferences,
@@ -35,98 +50,144 @@ export const Action: React.FC<ActionProps> = ({ prediction, prefsOverride }) => 
         return `${col.columnName} is ${col.columnValue}${appendAnd ? ' &' : ''}`;
     }
 
-    const prescriptionToNarrative = (prescription: SFDCPrescription): string => {
-        const totalChange: string = numeral(prescription.value).format(prefs.explain.valueNumberFormatting);
+    const prescriptionToNarrative = (prescription: SFDCPrescription): React.ReactNode => {
+        let totalChange: string = numeral(Math.abs(prescription.value)).format(prefs.explain.valueNumberFormatting);
+        if (prescription.value > 0) {
+            totalChange = `${totalChange} increase`;
+        } else if (prescription.value < 0) {
+            totalChange = `${totalChange} decrease`;
+        } else {
+            totalChange = 'No change'
+        }
         const explanations: string[] = prescription.columns.map(col => colValueToExplanation(col));
-        if (explanations.length === 1) return `${totalChange} if ${explanations[0]}`;
+        if (explanations.length === 1) return (
+            <div
+                css={css`
+                    display: flex;
+                    flex-direction: column;
+                `}
+            >
+                <div
+                    css={css`
+                        font-size: ${prefs.predict.textSizeInPx}px;
+                        font-weight: ${prefs.predict.textWeight};
+                        margin-bottom: ${prefs.predict.textSizeInPx / 2}px;
+                        display: flex; 
+                        justify-content: center;
+                        align-items: center;
+                    `}
+                >
+                    {totalChange}
+                </div>
+                <div
+                    css={css`
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    `}
+                >
+                    {`if ${explanations[0]}`}
+                </div>
+            </div>
+        ) 
         const lastExplanation: string = explanations.pop() || '';
-        return `${totalChange} if ${explanations.join(', ')}, and ${lastExplanation}`
+        return (
+            <div
+                css={css`
+                    display: flex;
+                    flex-direction: column;
+                `}
+            >
+                <div
+                    css={css`
+                        font-size: ${prefs.predict.textSizeInPx}px;
+                        font-weight: ${prefs.predict.textWeight};
+                        margin-bottom: ${prefs.predict.textSizeInPx / 2}px;
+                        display: flex; 
+                        justify-content: center;
+                        align-items: center;
+                    `}
+                >
+                    {totalChange}
+                </div>
+                <div>
+                    {`if ${explanations.join(', ')}, and ${lastExplanation}`}
+                </div>
+            </div>
+        )
     }
 
-    const { prescriptions } = prediction.predictions[0];
+    if (selected === undefined) return null;
 
     return (
-        <div>
-            {prescriptions.map((prescription, idx) => (
-                <div key={`${idx}.${prescription.value}`}>
-                    {prescriptionToNarrative(prescription)}
+        <div
+            css={css`
+                width: 80%;
+            `}
+        >
+            <div
+                css={css`
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                `}
+            >
+                {prescriptions[selected]}
+            </div>
+            <div
+                css={css`
+                    display: flex;
+                    flex-direction: row;
+                `}
+            >
+                <div
+                    css={css`
+                        flex: 1;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    `}
+                >
+                    {selected > 0
+                        ? (
+                            <RiArrowLeftSLine
+                                css={css`
+                                color: ${prefs.global.accentColor};
+                                width: 30px;
+                                height: 30px;
+                                cursor: pointer;
+                            `}
+                                onClick={() => setSelected(curr => curr === undefined ? undefined : curr - 1)}
+                            />
+                        )
+                        : null
+                    }
                 </div>
-            ))}
+                <div
+                    css={css`
+                        flex: 1;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    `}
+                >
+                    {selected < prescriptions.length - 1
+                        ? (
+                            <RiArrowRightSLine
+                                css={css`
+                                    color: ${prefs.global.accentColor};
+                                    width: 30px;
+                                    height: 30px;
+                                    cursor: pointer;
+                                `}
+                                onClick={() => setSelected(curr => curr === undefined ? undefined : curr + 1)}
+                            />
+                        )
+                        : null
+                    }
+                </div>
+            </div>
         </div>
     )
-
-    // return (
-    //     <table
-    //         css={css`
-    //             width: 90%;
-    //             border-collapse: collapse;
-    //             & > * td {
-    //                 font-size: ${prefs.explain.textBodySizeInPx}px;
-    //                 font-weight: ${prefs.explain.textBodyWeight};
-    //                 color: ${prefs.global.textColor};
-    //             }
-    //             & > * th {
-    //                 font-size: ${prefs.explain.textHeaderSizeInPx}px;
-    //                 font-weight: ${prefs.explain.textHeaderWeight};
-    //                 color: ${prefs.global.textColor};
-    //             }
-    //         `}
-    //     >
-    //         <thead>
-    //             <tr
-    //                 css={css`
-    //                     & > th {border-bottom: 2px solid ${prefs.global.textColor}};
-    //                 `}
-    //             >
-    //                 <th
-    //                     css={css`
-    //                         width: 25%;
-    //                     `}
-    //                 >
-    //                     Value
-    //                 </th>
-    //                 <th>Explanation</th>
-    //             </tr>
-    //         </thead>
-    //         <tbody>
-    //             {middleValues.map((mv, idx) => (
-    //                 <tr 
-    //                     css={idx < middleValues.length - 1 
-    //                         ? css`
-    //                             & > td {border-bottom: 1px dotted ${prefs.global.textColor}};
-    //                         `
-    //                         : null
-    //                     }
-    //                     key={`pred.mv.${idx}`}
-    //                 >
-    //                     <td>
-    //                         {mv.value > 0 ? upArrow : mv.value < 0 ? downArrow : '&nbsp;'}
-    //                     </td>
-    //                     <td
-    //                         css={css`
-    //                             text-align: center;
-
-    //                         `}
-    //                     >
-    //                         {mv.value > 0 ? '+' : ''}{numeral(mv.value).format(prefs.explain.valueNumberFormatting)}
-    //                     </td>
-    //                     <td>
-    //                         <table>
-    //                             <tbody>
-    //                                 {mv.columns.map((col, idx) => (
-    //                                     <tr key={`pred.mv.col.${idx}`}>
-    //                                         <td>
-    //                                             {middleValueColToExplanation(col, idx < mv.columns.length - 1)}
-    //                                         </td>
-    //                                     </tr>
-    //                                 ))}
-    //                             </tbody>
-    //                         </table>
-    //                     </td>
-    //                 </tr>
-    //             ))}
-    //         </tbody>
-    //     </table>
-    // )
 
 }

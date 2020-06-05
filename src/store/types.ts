@@ -35,25 +35,12 @@ export type PreferencesTextWeight =
     | 'bold'
     | 'normal'
 
-// export type PreferencesText = {
-//     sizeInPx: number,
-//     weight: PreferencesTextWeight,
-//     color: string,
-//     prefix?: string,
-//     suffix?: string,
-//     numberFormatting: string
-// }
-
-// export type PreferencesUiColors = {
-//     background: string,
-//     spinner: string
-// }
-
 export type PreferencesGlobal = {
     showExplainPage: boolean,
     showActionPage: boolean,
     backgroundColor: string,
-    textColor: string
+    textColor: string,
+    accentColor: string
 }
 
 export type PreferencesPredict = {

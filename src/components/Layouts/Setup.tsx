@@ -13,6 +13,7 @@ const cssOuterContainer = css`
 const cssHeaderContainer = css`
     display: flex;
     flex-direction: row;
+    min-height: 75px;
 `;
 
 const cssHeaderLogoContainer = (width?: number, height?: number) => css`
@@ -22,12 +23,12 @@ const cssHeaderLogoContainer = (width?: number, height?: number) => css`
 
 const cssContentContainer = css`
     flex: 1;
-    padding-bottom: 40px;
+    padding-bottom: 50px;
     margin-top: 20px;
 `;
 
 const cssNavContainer = (align: 'left' | 'right') => css`
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     height: 40px;

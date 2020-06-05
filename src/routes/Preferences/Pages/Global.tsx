@@ -103,6 +103,16 @@ export const GlobalPrefsControls: React.FC<GlobalPrefsMenuProps> = ({
                     </div>
                 </div>
             </ColorPicker>
+            <ColorPicker
+                initColor={globalPrefs.accentColor}
+                onColorPicked={color => onSettingChanged({...globalPrefs, accentColor: color})}
+            >
+                <div css={cssColorPickLauncher(globalPrefs.accentColor)}>
+                    <div css={cssColorPickLauncherText}>
+                        Accent Color
+                    </div>
+                </div>
+            </ColorPicker>
         </React.Fragment>
     )
 
