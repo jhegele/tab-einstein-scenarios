@@ -6,7 +6,8 @@ const initPreferences: Preferences = {
         showExplainPage: true,
         showActionPage: true,
         backgroundColor: '#FFFFFF',
-        textColor: '#333333'
+        textColor: '#333333',
+        accentColor: '#ace5c8'
     },
     predict: {
         textSizeInPx: 24,

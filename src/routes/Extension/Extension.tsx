@@ -10,17 +10,14 @@ import { predictionUpdateAll } from '../../store/slices/prediction';
 import { Loading } from '../../components';
 import { Predict } from './Predict';
 import { preferencesUpdateAll } from '../../store/slices/preferences';
+import merge from 'lodash/merge'
 
 export const Extension: React.FC = () => {
 
     const { extensions } = window.tableau;
 
-    const { initialized, setupComplete } = useSelector(
-        (state: RootState) => state.extension,
-        shallowEqual
-    )
-    const prefs = useSelector(
-        (state: RootState) => state.preferences,
+    const { auth, preferences, extension: { initialized, setupComplete }, prediction } = useSelector(
+        (state: RootState) => state,
         shallowEqual
     )
     const dispatch = useDispatch();
@@ -37,17 +34,22 @@ export const Extension: React.FC = () => {
         }
         // for each object in settings, if it exists, parse it to JSON and load to redux
         if (settings.auth) {
-            const auth: Auth = JSON.parse(settings.auth!);
+            const settingsAuth: Auth = JSON.parse(settings.auth!);
+            // merge in any new settings that may have been added and use default values
+            // to minimize the chance of breaking existing integrations
+            merge(auth, settingsAuth,);
             dispatch(authUpdate(auth));
             settingsState.auth = true;
         }
         if (settings.prediction) {
-            const prediction: Prediction = JSON.parse(settings.prediction!);
+            const settingsPrediction: Prediction = JSON.parse(settings.prediction!);
+            merge(prediction, settingsPrediction);
             dispatch(predictionUpdateAll(prediction));
             settingsState.prediction = true;
         }
         if (settings.preferences) {
-            const preferences: Preferences = JSON.parse(settings.preferences);
+            const settingsPreferences: Preferences = JSON.parse(settings.preferences);
+            merge(preferences, settingsPreferences);
             dispatch(preferencesUpdateAll(preferences));
             settingsState.preferences = true;
         }
@@ -56,7 +58,7 @@ export const Extension: React.FC = () => {
     }
 
     const loadPrefsToSettings = async () => {
-        extensions.settings.set('preferences', JSON.stringify(prefs));
+        extensions.settings.set('preferences', JSON.stringify(preferences));
         await extensions.settings.saveAsync()
     }
 
