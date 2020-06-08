@@ -5,6 +5,7 @@ import { css } from '@emotion/core';
 import { Loading, LayoutSetup } from '../../components';
 import { DropdownSelect, Button } from '@tableau/tableau-ui';
 import { MappedFields } from '../../store/types';
+import stringSimilarity from 'string-similarity';
 
 import einsteinLogo from '../../static/img/einstein-logo.png';
 
@@ -43,6 +44,7 @@ export const MapFields: React.FC<MapFieldsProps> = ({ auth, predictionDef, param
 
     const [ modelFields, setModelFields ] = useState<string[]>();
     const [ mappedFields, setMappedFields ] = useState<MappedFields>([])
+    // const [ mapFieldToParam, setMapFieldToParam ] = useState<{ [key: string]: string}>();
 
     params.sort((a, b) => a.name > b.name ? 1 : a.name < b.name ? -1 : 0);
 
@@ -67,12 +69,30 @@ export const MapFields: React.FC<MapFieldsProps> = ({ auth, predictionDef, param
     }, [])
 
     useEffect(() => {
-        console.log(mappedFields);
-    }, [mappedFields])
+        if (modelFields) {
+            const initMappedFields: MappedFields = [];
+            modelFields.forEach(field => {
+                const similarities: { param: string, score: number }[] = params.map(p => ({
+                    param: p.name,
+                    score: stringSimilarity.compareTwoStrings(field, p.name)
+                }));
+                similarities.sort((a, b) => b.score - a.score);
+                // console.log(field, similarities);
+                if (similarities[0].score >= 0.70) {
+                    initMappedFields.push({
+                        einFieldName: field,
+                        tabParamName: similarities[0].param
+                    })
+                }
+                setMappedFields(initMappedFields);
+            })
+        }
+    }, [modelFields])
 
     if (!modelFields) return <Loading />
 
     const handleSelectParam = (einsteinFieldName: string, tableauParamName: string) => {
+        console.log(einsteinFieldName, tableauParamName);
         const mapIndex = mappedFields.map(f => f.einFieldName).indexOf(einsteinFieldName);
         const newMappedFields = [...mappedFields];
         if (mapIndex === -1) {
@@ -82,9 +102,14 @@ export const MapFields: React.FC<MapFieldsProps> = ({ auth, predictionDef, param
             })
         } else {
             newMappedFields.splice(mapIndex, 1);
-            
         }
         setMappedFields(newMappedFields);
+    }
+
+    const getDropdownValue = (einsteinFieldName: string): string => {
+        const matchedFields = mappedFields.filter(f => f.einFieldName === einsteinFieldName);
+        if (matchedFields.length !== 1) return '';
+        return matchedFields[0].tabParamName;
     }
 
     return (
@@ -148,7 +173,7 @@ export const MapFields: React.FC<MapFieldsProps> = ({ auth, predictionDef, param
                         Tableau Parameters
                     </div>
                 </div>
-                {modelFields.map((fieldName, idx) => (
+                {modelFields.map((fieldName: string, idx: number) => (
                     <div key={fieldName} css={cssFieldMapRowContainer(idx)}>
                         <div
                             css={css`
@@ -168,6 +193,7 @@ export const MapFields: React.FC<MapFieldsProps> = ({ auth, predictionDef, param
                                 css={css`
                                     min-width: 300px;
                                 `}
+                                value={getDropdownValue(fieldName)}
                             >
                                 <option value=''>NULL</option>
                                 {params.map(param => (

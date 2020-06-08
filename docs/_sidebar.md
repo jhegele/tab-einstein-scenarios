@@ -8,4 +8,5 @@
 * Help
   * [FAQ](faq.md)
   * [About](about.md)
+  * [Tips & Tricks](tips-tricks.md)
 * [Change Log](change-log.md)
