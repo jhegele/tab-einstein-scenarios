@@ -78,7 +78,9 @@ export type PreferencesAction = {
     pageName: string,
     textPrimary: PreferencesTextOptions,
     textSecondary: PreferencesTextOptions,
-    maxRecommendations?: number
+    maxRecommendations?: number,
+    primaryNumberFormatting: string,
+    secondaryNumberFormatting: string
 }
 
 export type Preferences = {

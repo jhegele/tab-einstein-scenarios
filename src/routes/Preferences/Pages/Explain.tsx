@@ -3,7 +3,7 @@ import { Explain } from '../../Extension/Pages/Explain';
 import { SFDCPredictionResponse } from '../../../api/types';
 import { Preferences, PreferencesExplain, PreferencesTextWeight } from '../../../store/types';
 import { TextField, DropdownSelect, Checkbox } from '@tableau/tableau-ui';
-import { ColorPicker, ArrowIcon } from '../../../components';
+import { ColorPicker, ArrowIcon, TextFormatter, NumberFormatter } from '../../../components';
 import { css } from '@emotion/core';
 
 interface ExplainPrefsContentProps {
@@ -113,7 +113,27 @@ export const ExplainPrefsControls: React.FC<ExplainPrefsControlsProps> = ({
                     />
                 </ColorPicker>
             </div>
-            <TextField
+            <TextFormatter
+                textOptions={explainPrefs.textHeader}
+                label='Header Formatting'
+                onOptionUpdate={(updatedTextOpts) => onSettingChanged({...explainPrefs, textHeader: updatedTextOpts})}
+            />
+            <TextFormatter
+                textOptions={explainPrefs.textBody}
+                label='Body Formatting'
+                onOptionUpdate={(updatedTextOpts) => onSettingChanged({...explainPrefs, textBody: updatedTextOpts})}
+            />
+            <NumberFormatter
+                numberFormat={explainPrefs.valueNumberFormatting}
+                label='Value Field - Number Format'
+                onFormatUpdate={(updatedNumFormat) => onSettingChanged({...explainPrefs, valueNumberFormatting: updatedNumFormat})}
+            />
+            <NumberFormatter
+                numberFormat={explainPrefs.explanationNumberFormatting}
+                label='Explanation Field - Number Format'
+                onFormatUpdate={(updatedNumFormat) => onSettingChanged({...explainPrefs, explanationNumberFormatting: updatedNumFormat})}
+            />
+            {/* <TextField
                 kind='line'
                 label='Header Size (px)'
                 value={explainPrefs.textHeaderSizeInPx}
@@ -195,7 +215,7 @@ export const ExplainPrefsControls: React.FC<ExplainPrefsControlsProps> = ({
                 onChange={({ target: { checked } }) => setExplanationIsPercentage(checked)}
             >
                 Explanation - Percentage
-            </Checkbox>
+            </Checkbox> */}
         </React.Fragment>
     )
 

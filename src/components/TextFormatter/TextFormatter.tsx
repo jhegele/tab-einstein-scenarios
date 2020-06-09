@@ -10,6 +10,9 @@ const cssOuterContainer = css`
 
 const cssLabelContainer = css`
     display: flex;
+    color: #4f4f4f;
+    line-height: 21px;
+    font-size: 12px;
 `;
 
 const cssControlsContainer = css`
@@ -21,6 +24,9 @@ const cssControlContainer = css`
     display: flex;
     flex: 1;
     align-items: center;
+    & :not(:last-child) {
+        margin-right: 4px;
+    }
 `;
 
 export interface TextFormatterProps {
@@ -55,6 +61,12 @@ export const TextFormatter: React.FC<TextFormatterProps> = ({
                         kind='line'
                         value={textOptions.size}
                         onChange={({ target: { value } }) => handleOptionUpdate({...textOptions, size: parseInt(value) })}
+                        css={css`
+                            width: 100%;
+                            & > * input {
+                                width: 100%;
+                            }
+                        `}
                     />
                 </div>
                 <div css={cssControlContainer}>
@@ -62,6 +74,9 @@ export const TextFormatter: React.FC<TextFormatterProps> = ({
                         kind='line'
                         value={textOptions.unit}
                         onChange={({ target: { value } }) => handleOptionUpdate({...textOptions, unit: value as PreferencesTextUnit })}
+                        css={css`
+                            width: 100%;
+                        `}
                     >
                         <option>px</option>
                         <option>pt</option>

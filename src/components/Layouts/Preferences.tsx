@@ -119,6 +119,7 @@ export const PreferencesLayout: React.FC<PreferencesLayoutProps> = ({
                         <option value='global'>Global</option>
                         <option value='predict'>Predict</option>
                         <option value='explain'>Explain</option>
+                        <option value='action'>Action</option>
                     </DropdownSelect>
                 </div>
             </div>

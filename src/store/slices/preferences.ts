@@ -47,7 +47,9 @@ const initPreferences: Preferences = {
             size: 12,
             unit: 'px',
             weight: 'normal'
-        }
+        },
+        primaryNumberFormatting: '0,0.00',
+        secondaryNumberFormatting: '0,0.00'
     }
 }
 
@@ -81,7 +83,8 @@ export const {
     preferencesUpdateAll, 
     preferencesUpdateGlobal,
     preferencesUpdatePredict,
-    preferencesUpdateExplain 
+    preferencesUpdateExplain,
+    preferencesUpdateAction
 } = slicePreferences.actions;
 
 export default slicePreferences.reducer;
