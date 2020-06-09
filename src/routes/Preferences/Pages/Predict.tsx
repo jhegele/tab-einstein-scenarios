@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Prediction } from '../../Extension/Pages/Prediction';
 import { SFDCPredictionResponse } from '../../../api/types';
-import { Preferences, PreferencesPredict, PreferencesTextWeight } from '../../../store/types';
+import { Preferences, PreferencesPredict } from '../../../store/types';
 import { TextField, DropdownSelect, Checkbox } from '@tableau/tableau-ui';
+import { TextFormatter } from '../../../components'
 
 interface PredictPrefsContentProps {
     prediction: SFDCPredictionResponse;
@@ -56,21 +57,11 @@ export const PredictPrefsControls: React.FC<PredictPrefsControlsProps> = ({
 
     return (
         <React.Fragment>
-            <TextField
-                kind='line'
-                label='Text Size (Px)'
-                onChange={({ target: { value } }) => onSettingChanged({...predictPrefs, textSizeInPx: parseInt(value)})}
-                value={predictPrefs.textSizeInPx}
+            <TextFormatter
+                label='Text Size'
+                textOptions={predictPrefs.text}
+                onOptionUpdate={(updatedTextPrefs) => onSettingChanged({...predictPrefs, text: updatedTextPrefs})}
             />
-            <DropdownSelect
-                kind='line'
-                label='Text Weight'
-                value={predictPrefs.textWeight}
-                onChange={({ target: { value } }) => onSettingChanged({...predictPrefs, textWeight: value as PreferencesTextWeight})}
-            >
-                <option value='normal'>Normal</option>
-                <option value='bold'>Bold</option>
-            </DropdownSelect>
             <TextField
                 kind='line'
                 label='Prefix'
