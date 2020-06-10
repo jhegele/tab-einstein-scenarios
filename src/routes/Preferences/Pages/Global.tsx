@@ -2,7 +2,6 @@ import React from 'react';
 import { PreferencesGlobal } from '../../../store/types';
 import { css } from '@emotion/core';
 import { ColorPicker } from '../../../components';
-import { Checkbox } from '@tableau/tableau-ui';
 
 const cssExampleContainer = css`
     height: 100%;
@@ -82,6 +81,8 @@ export const GlobalPrefsControls: React.FC<GlobalPrefsMenuProps> = ({
     onSettingChanged
 }) => {
 
+    // TODO: Need to rework navigation to make it easier to support page display
+    // configuration by the user
     return (
         <React.Fragment>
             <ColorPicker
@@ -114,24 +115,6 @@ export const GlobalPrefsControls: React.FC<GlobalPrefsMenuProps> = ({
                     </div>
                 </div>
             </ColorPicker>
-            <Checkbox
-                checked={globalPrefs.showPredictPage}
-                onChange={({ target: { checked } }) => onSettingChanged({...globalPrefs, showPredictPage: checked})}
-            >
-                Show Predict Page
-            </Checkbox>
-            <Checkbox
-                checked={globalPrefs.showExplainPage}
-                onChange={({ target: { checked } }) => onSettingChanged({...globalPrefs, showExplainPage: checked})}
-            >
-                Show Explain Page
-            </Checkbox>
-            <Checkbox
-                checked={globalPrefs.showActionPage}
-                onChange={({ target: { checked } }) => onSettingChanged({...globalPrefs, showActionPage: checked})}
-            >
-                Show Action Page
-            </Checkbox>
         </React.Fragment>
     )
 
