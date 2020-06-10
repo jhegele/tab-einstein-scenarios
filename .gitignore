@@ -2,5 +2,5 @@
 .envrc
 node_modules
 .python-version
-.vscode
 testing
+.vscode
