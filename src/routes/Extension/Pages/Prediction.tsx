@@ -25,11 +25,12 @@ export const Prediction: React.FC<PredictionProps> = ({ prediction, prefsOverrid
     const predictedValue = prediction!.predictions[0].prediction.total;
     const val = numeral(predictedValue).format(prefs.predict.numberFormatting);
     const { prefix, suffix } = prefs.predict;
+    const fontSize = `${prefs.predict.text.size}${prefs.predict.text.unit}`;
     return (
         <div
             css={css`
-                font-size: ${prefs.predict.textSizeInPx}px;
-                font-weight: ${prefs.predict.textWeight};
+                font-size: ${fontSize};
+                font-weight: ${prefs.predict.text.weight};
                 color: ${prefs.global.textColor};
             `}
         >

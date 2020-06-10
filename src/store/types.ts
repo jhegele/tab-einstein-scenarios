@@ -35,7 +35,20 @@ export type PreferencesTextWeight =
     | 'bold'
     | 'normal'
 
+export type PreferencesTextUnit = 
+    | 'px'
+    | 'pt'
+    | 'em'
+    | 'rem'
+
+export type PreferencesTextOptions = {
+    size: number,
+    unit: PreferencesTextUnit,
+    weight: PreferencesTextWeight
+}
+
 export type PreferencesGlobal = {
+    showPredictPage: boolean,
     showExplainPage: boolean,
     showActionPage: boolean,
     backgroundColor: string,
@@ -44,26 +57,35 @@ export type PreferencesGlobal = {
 }
 
 export type PreferencesPredict = {
+    pageName: string,
+    text: PreferencesTextOptions,
     numberFormatting: string,
-    textSizeInPx: number,
-    textWeight: PreferencesTextWeight,
     prefix?: string,
     suffix?: string
 }
 
 export type PreferencesExplain = {
-    textHeaderSizeInPx: number,
-    textHeaderWeight: PreferencesTextWeight,
-    textBodySizeInPx: number,
-    textBodyWeight: PreferencesTextWeight,
+    pageName: string,
+    textHeader: PreferencesTextOptions,
+    textBody: PreferencesTextOptions,
     arrowUpColor: string,
     arrowDownColor: string,
     valueNumberFormatting: string,
     explanationNumberFormatting: string
 }
 
+export type PreferencesAction = {
+    pageName: string,
+    textPrimary: PreferencesTextOptions,
+    textSecondary: PreferencesTextOptions,
+    maxRecommendations?: number,
+    primaryNumberFormatting: string,
+    secondaryNumberFormatting: string
+}
+
 export type Preferences = {
     global: PreferencesGlobal,
     predict: PreferencesPredict,
-    explain: PreferencesExplain
+    explain: PreferencesExplain,
+    action: PreferencesAction
 }

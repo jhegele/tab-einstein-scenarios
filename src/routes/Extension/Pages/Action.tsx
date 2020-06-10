@@ -14,6 +14,13 @@ interface ActionProps {
 
 export const Action: React.FC<ActionProps> = ({ prediction, prefsOverride }) => {
 
+    console.log(prefsOverride);
+
+    const preferences = useSelector(
+        (state: RootState) => state.preferences,
+        shallowEqual
+    )
+
     const [ selected, setSelected ] = useState<number>();
     const [ prescriptions, setPrescriptions ] = useState<React.ReactNode[]>([]);
 
@@ -25,12 +32,11 @@ export const Action: React.FC<ActionProps> = ({ prediction, prefsOverride }) => 
         } else {
             console.log('Einstein sent back no prescriptive info.')
         }
-    }, [])
+    }, [preferences, prefsOverride])
 
-    const preferences = useSelector(
-        (state: RootState) => state.preferences,
-        shallowEqual
-    )
+    useEffect(() => {
+        console.log('Action Page Prefs Update: ', preferences);
+    }, [preferences])
 
     // allow override of redux prefs so that we can re-use this component in the
     // config window
@@ -41,8 +47,8 @@ export const Action: React.FC<ActionProps> = ({ prediction, prefsOverride }) => 
         const reRange: RegExp = /(\d(?:\.?\d*)?) to (\d(?:\.?\d*)?)/;
         const matchRange = col.columnValue.match(reRange);
         if (matchRange) {
-            const rangeMin: string = numeral(parseFloat(matchRange[1])).format(prefs.explain.explanationNumberFormatting);
-            const rangeMax: string = numeral(parseFloat(matchRange[2])).format(prefs.explain.explanationNumberFormatting);
+            const rangeMin: string = numeral(parseFloat(matchRange[1])).format(prefs.action.secondaryNumberFormatting);
+            const rangeMax: string = numeral(parseFloat(matchRange[2])).format(prefs.action.secondaryNumberFormatting);
             return `${col.columnName} is between ${rangeMin} and ${rangeMax}${appendAnd ? ' &' : ''}`;
         }
 
@@ -51,7 +57,7 @@ export const Action: React.FC<ActionProps> = ({ prediction, prefsOverride }) => 
     }
 
     const prescriptionToNarrative = (prescription: SFDCPrescription): React.ReactNode => {
-        let totalChange: string = numeral(Math.abs(prescription.value)).format(prefs.explain.valueNumberFormatting);
+        let totalChange: string = numeral(Math.abs(prescription.value)).format(prefs.action.primaryNumberFormatting);
         if (prescription.value > 0) {
             totalChange = `${totalChange} increase`;
         } else if (prescription.value < 0) {
@@ -69,9 +75,9 @@ export const Action: React.FC<ActionProps> = ({ prediction, prefsOverride }) => 
             >
                 <div
                     css={css`
-                        font-size: ${prefs.predict.textSizeInPx}px;
-                        font-weight: ${prefs.predict.textWeight};
-                        margin-bottom: ${prefs.predict.textSizeInPx / 2}px;
+                        font-size: ${`${prefs.action.textPrimary.size}${prefs.action.textPrimary.unit}`};
+                        font-weight: ${prefs.action.textPrimary.weight};
+                        margin-bottom: ${`${prefs.action.textPrimary.size / 2}${prefs.action.textPrimary.unit}`};
                         display: flex; 
                         justify-content: center;
                         align-items: center;
@@ -81,6 +87,9 @@ export const Action: React.FC<ActionProps> = ({ prediction, prefsOverride }) => 
                 </div>
                 <div
                     css={css`
+                        font-size: ${`${prefs.action.textSecondary.size}${prefs.action.textSecondary.unit}`};
+                        font-weight: ${prefs.action.textSecondary.weight};
+                        margin-bottom: ${`${prefs.action.textSecondary.size / 2}${prefs.action.textSecondary.unit}`};
                         display: flex;
                         justify-content: center;
                         align-items: center;
@@ -100,9 +109,9 @@ export const Action: React.FC<ActionProps> = ({ prediction, prefsOverride }) => 
             >
                 <div
                     css={css`
-                        font-size: ${prefs.predict.textSizeInPx}px;
-                        font-weight: ${prefs.predict.textWeight};
-                        margin-bottom: ${prefs.predict.textSizeInPx / 2}px;
+                        font-size: ${`${prefs.action.textPrimary.size}${prefs.action.textPrimary.unit}`};
+                        font-weight: ${prefs.action.textPrimary.weight};
+                        margin-bottom: ${`${prefs.action.textPrimary.size / 2}${prefs.action.textPrimary.unit}`};
                         display: flex; 
                         justify-content: center;
                         align-items: center;
@@ -110,7 +119,16 @@ export const Action: React.FC<ActionProps> = ({ prediction, prefsOverride }) => 
                 >
                     {totalChange}
                 </div>
-                <div>
+                <div
+                    css={css`
+                        font-size: ${`${prefs.action.textSecondary.size}${prefs.action.textSecondary.unit}`};
+                        font-weight: ${prefs.action.textSecondary.weight};
+                        margin-bottom: ${`${prefs.action.textSecondary.size / 2}${prefs.action.textSecondary.unit}`};
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    `}
+                >
                     {`if ${explanations.join(', ')}, and ${lastExplanation}`}
                 </div>
             </div>

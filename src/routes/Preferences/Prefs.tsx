@@ -3,6 +3,7 @@ import { PreferencesLayout } from '../../components/Layouts/Preferences';
 import { GlobalPrefsContent, GlobalPrefsControls } from './Pages/Global';
 import { PredictPrefsContent, PredictPrefsControls } from './Pages/Predict';
 import { ExplainPrefsContent, ExplainPrefsControls } from './Pages/Explain';
+import { ActionPrefsContent, ActionPrefsControls } from './Pages/Action';
 import { Switch, Route, useHistory, useLocation } from 'react-router-dom';
 import { Preferences } from '../../store/types';
 import { SFDCPredictionResponse } from '../../api/types';
@@ -47,7 +48,7 @@ export const Prefs: React.FC = () => {
         extensions.ui.closeDialog(JSON.stringify(prefs));
     }
 
-    const { global: globalPrefs, predict: predictPrefs, explain: explainPrefs } = prefs;
+    const { global: globalPrefs, predict: predictPrefs, explain: explainPrefs, action: actionPrefs } = prefs;
     
     const sharedPropsLayout = {
         onDone: handleDone,
@@ -98,6 +99,22 @@ export const Prefs: React.FC = () => {
                     {...sharedPropsLayout}
                 >
                     <ExplainPrefsContent
+                        prediction={prediction}
+                        prefs={prefs}
+                    />
+                </PreferencesLayout>
+            </Route>
+            <Route path='/prefs/action'>
+                <PreferencesLayout
+                    controls={
+                        <ActionPrefsControls
+                            actionPrefs={actionPrefs}
+                            onSettingChanged={newActionPrefs => setPrefs(curr => ({...curr!, action: newActionPrefs}))}
+                        />
+                    }
+                    {...sharedPropsLayout}
+                >
+                    <ActionPrefsContent
                         prediction={prediction}
                         prefs={prefs}
                     />
