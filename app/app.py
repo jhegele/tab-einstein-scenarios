@@ -21,6 +21,14 @@ SCOPES = [
 
 PUSHER_SECRET = os.environ.get('PUSHER_SECRET')
 
+# Because the auth flow cannot be versioned, we have to intercept the bundle
+# request for the confirm screen and redirect it to a valid bundle.
+@app.before_request
+def handle_bad_bundle_req():
+    if request.path == '/static/bundle..js':
+        return redirect('/static/bundle.0.2.4.js')
+
+# OAuth Handling
 @app.route('/auth/<channel_id>')
 def auth(channel_id):
     session['channel_id'] = channel_id
@@ -108,10 +116,13 @@ def api_get_prediction():
     r = requests.post(url, json=payload, headers=headers)
     return jsonify(r.json())
 
-@app.route('/', defaults={'path': None})
-@app.route('/<path:path>')
-def index(path):
-    return render_template('index.html')
+@app.route('/v<version>/<path:path>')
+def catchall(version, path):
+    return render_template('index.html', version=version)
+
+@app.route('/', defaults={'version': '0.2.4', 'path': None})
+def index(version, path):
+    return render_template('index.html', version=version)    
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

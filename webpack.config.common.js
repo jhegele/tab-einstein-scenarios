@@ -8,7 +8,7 @@ module.exports = {
     entry: APP_PATH,
 
     output: {
-        filename: 'bundle.js',
+        filename: `bundle.${package.version}.js`,
         path: path.resolve(__dirname, 'app', 'static'),
     },
 
