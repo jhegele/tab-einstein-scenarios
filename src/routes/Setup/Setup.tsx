@@ -24,7 +24,7 @@ export const Setup: React.FC = () => {
     const history = useHistory();
 
     const openSetupDialog = () => {
-        const url = `${window.location.origin}/setup/authenticate`;
+        const url = `${window.location.origin}/v${env_APP_VERSION}/setup/authenticate`;
         dashboard.getParametersAsync()
             .then(params => {
                 const initPayload: DashboardParams = params.map(p => ({
