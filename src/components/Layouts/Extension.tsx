@@ -81,7 +81,7 @@ export const LayoutExtension: React.FC<LayoutExtensionProps> = ({
     const dispatch = useDispatch();
 
     const handleClickToolbar = () => {
-        const url = `${window.location.origin}/v${env_APP_VERSION}/prefs`;
+        const url = `${window.location.origin}/prefs`;
         const payload = {
             preferences: preferences,
             prediction: predictionResponse
