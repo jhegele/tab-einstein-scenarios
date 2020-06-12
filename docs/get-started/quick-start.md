@@ -37,3 +37,7 @@ I like to use EA (for Einstein Analytics) as a prefix to make it easy to find th
 # Adding the Extension
 
 At this point, you're ready to add the extension to your dashboard. Drag an extension object onto your dashboard and select the TREX file you previously downloaded. The extension will walk you through the setup process.
+
+# Deploying / Managing Extensions on Tableau Server/Online
+
+Please refer to Tableau's Knowledge Base for details on how to [use Dashboard Extensions](https://help.tableau.com/current/pro/desktop/en-us/dashboard_extensions.htm) and/or how to [manage extensions](https://help.tableau.com/current/server/en-us/dashboard_extensions_server.htm) on Tableau Server or Online.
