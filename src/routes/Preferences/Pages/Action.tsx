@@ -40,19 +40,19 @@ export const ActionPrefsControls: React.FC<ActionPrefsControlsProps> = ({
                 textOptions={actionPrefs.textPrimary}
                 onOptionUpdate={(updatedTextPrefs) => onSettingChanged({...actionPrefs, textPrimary: updatedTextPrefs})}
             />
+            <NumberFormatter
+                numberFormat={actionPrefs.primaryNumberFormatting}
+                label='Primary Number Formatting'
+                onFormatUpdate={(updatedNumberFormat: string) => onSettingChanged({...actionPrefs, primaryNumberFormatting: updatedNumberFormat})}
+            />
             <TextFormatter
                 label='Secondary Text Formatting'
                 textOptions={actionPrefs.textSecondary}
                 onOptionUpdate={(updatedTextPrefs) => onSettingChanged({...actionPrefs, textSecondary: updatedTextPrefs})}
             />
             <NumberFormatter
-                numberFormat={actionPrefs.primaryNumberFormatting}
-                label='Number Formatting'
-                onFormatUpdate={(updatedNumberFormat: string) => onSettingChanged({...actionPrefs, primaryNumberFormatting: updatedNumberFormat})}
-            />
-            <NumberFormatter
                 numberFormat={actionPrefs.secondaryNumberFormatting}
-                label='Number Formatting'
+                label='Secondary Number Formatting'
                 onFormatUpdate={(updatedNumberFormat: string) => onSettingChanged({...actionPrefs, secondaryNumberFormatting: updatedNumberFormat})}
             />
         </React.Fragment>
