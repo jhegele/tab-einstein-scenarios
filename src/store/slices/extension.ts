@@ -4,7 +4,10 @@ import { SFDCPredictionResponse } from '../../api/types';
 
 const initExtension: Extension = {
     initialized: false,
-    setupComplete: false
+    setupComplete: false,
+    // TODO: Need to add ability to edit setup config and, optionally, password
+    // protect those settings.
+    password: ''
 }
 
 const sliceExtension = createSlice({

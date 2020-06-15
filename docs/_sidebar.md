@@ -3,6 +3,7 @@
   * [Video Walkthrough](./get-started/video-walkthrough.md)
   * [How It Works](./get-started/how-it-works.md)
 * Configuration
+  * [Preferences](./configuration/preferences.md)
   * [Global](./configuration/global.md)
   * [Predict](./configuration/predict.md)
   * [Explain](./configuration/explain.md)
