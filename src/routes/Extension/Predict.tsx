@@ -7,6 +7,7 @@ import type { LayoutExtensionProps } from '../../components/Layouts/Extension';
 import { ParameterChangedEvent } from '@tableau/extensions-api-types';
 import { Prediction } from './Pages/Prediction';
 import { Explain } from './Pages/Explain';
+import { Action } from './Pages/Action';
 import { useDispatch } from 'react-redux';
 import { extensionSetPredictionResponse } from '../../store/slices/extension';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
@@ -130,7 +131,7 @@ export const Predict: React.FC = () => {
         showToolbar: extensions.environment.mode === 'authoring',
     }
     const explanationExists = predictionResponse.predictions[0].prediction.middleValues.length > 0;
-    // const prescriptiveExists = predictionResponse.predictions[0].prescriptions.length > 0;
+    const prescriptiveExists = predictionResponse.predictions[0].prescriptions.length > 0;
 
     if (explanationExists) {
         layoutProps.pages = [{
@@ -143,7 +144,14 @@ export const Predict: React.FC = () => {
             onClick: () => handlePageChange('explain'),
             active: activePage === 'explain'
         })
+        if (prescriptiveExists) layoutProps.pages.push({
+            name: 'Action',
+            onClick: () => handlePageChange('action'),
+            active: activePage === 'action'
+        })
     }
+
+    console.log(predictionResponse);
 
     return (
         <LayoutExtension
@@ -155,6 +163,9 @@ export const Predict: React.FC = () => {
                 </Route>
                 <Route path='/explain'>
                     <Explain prediction={predictionResponse} />
+                </Route>
+                <Route path='/action'>
+                    <Action prediction={predictionResponse} />
                 </Route>
             </Switch>
         </LayoutExtension>

@@ -48,13 +48,13 @@ export const Explain: React.FC<ExplainProps> = ({ prediction, prefsOverride }) =
                 width: 90%;
                 border-collapse: collapse;
                 & > * td {
-                    font-size: ${prefs.explain.textBodySizeInPx}px;
-                    font-weight: ${prefs.explain.textBodyWeight};
+                    font-size: ${`${prefs.explain.textBody.size}${prefs.explain.textBody.unit}`};
+                    font-weight: ${prefs.explain.textBody.weight};
                     color: ${prefs.global.textColor};
                 }
                 & > * th {
-                    font-size: ${prefs.explain.textHeaderSizeInPx}px;
-                    font-weight: ${prefs.explain.textHeaderWeight};
+                    font-size: ${`${prefs.explain.textHeader.size}${prefs.explain.textHeader.unit}`};
+                    font-weight: ${prefs.explain.textHeader.weight};
                     color: ${prefs.global.textColor};
                 }
             `}

@@ -103,6 +103,35 @@ export const GlobalPrefsControls: React.FC<GlobalPrefsMenuProps> = ({
                     </div>
                 </div>
             </ColorPicker>
+            <ColorPicker
+                initColor={globalPrefs.accentColor}
+                onColorPicked={color => onSettingChanged({...globalPrefs, accentColor: color})}
+            >
+                <div css={cssColorPickLauncher(globalPrefs.accentColor)}>
+                    <div css={cssColorPickLauncherText}>
+                        Accent Color
+                    </div>
+                </div>
+            </ColorPicker>
+            {/* TODO: Need to rework navigation to make it easier for the user to select specific pages */}
+            {/* <Checkbox
+                checked={globalPrefs.showPredictPage}
+                onChange={({ target: { checked } }) => onSettingChanged({...globalPrefs, showPredictPage: checked})}
+            >
+                Show Predict Page
+            </Checkbox>
+            <Checkbox
+                checked={globalPrefs.showExplainPage}
+                onChange={({ target: { checked } }) => onSettingChanged({...globalPrefs, showExplainPage: checked})}
+            >
+                Show Explain Page
+            </Checkbox>
+            <Checkbox
+                checked={globalPrefs.showActionPage}
+                onChange={({ target: { checked } }) => onSettingChanged({...globalPrefs, showActionPage: checked})}
+            >
+                Show Action Page
+            </Checkbox> */}
         </React.Fragment>
     )
 

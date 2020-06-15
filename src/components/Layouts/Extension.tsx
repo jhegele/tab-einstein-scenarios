@@ -27,7 +27,7 @@ const cssContent = css`
     justify-content: center;
 `;
 
-const cssDisplayMenuItem = (isActive: boolean) => css`
+const cssDisplayMenuItem = (pageBorderBottomColor: string, isActive: boolean) => css`
     flex: 1;
     display: flex;
     justify-content: center;
@@ -46,7 +46,7 @@ const cssDisplayMenuItem = (isActive: boolean) => css`
         height: 0;
         left: -3px;
         bottom: 0px;
-        border-bottom: 6px solid #ace5c8;
+        border-bottom: 6px solid ${pageBorderBottomColor};
         z-index: -1;
     }
 `;
@@ -126,7 +126,7 @@ export const LayoutExtension: React.FC<LayoutExtensionProps> = ({
                 {pages.map(page => (
                     <div
                         key={`page.name.${page.name}`}
-                        css={cssDisplayMenuItem(page.active)}
+                        css={cssDisplayMenuItem(preferences.global.accentColor, page.active)}
                         onClick={() => page.onClick()}
                     >
                         <span>{page.name}</span>

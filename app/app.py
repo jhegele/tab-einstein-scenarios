@@ -21,6 +21,7 @@ SCOPES = [
 
 PUSHER_SECRET = os.environ.get('PUSHER_SECRET')
 
+# OAuth Handling
 @app.route('/auth/<channel_id>')
 def auth(channel_id):
     session['channel_id'] = channel_id
@@ -108,10 +109,10 @@ def api_get_prediction():
     r = requests.post(url, json=payload, headers=headers)
     return jsonify(r.json())
 
-@app.route('/', defaults={'path': None})
 @app.route('/<path:path>')
+@app.route('/', defaults={'path': None})
 def index(path):
-    return render_template('index.html')
+    return render_template('index.html')    
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
