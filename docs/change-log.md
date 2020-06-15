@@ -1,7 +1,7 @@
 # Change Log
 
 ## v0.3.0
-_Released on:_
+_Released on: 15 June 2020_
 
 This is a major (beta) release consisting of the following new features, enhancements, and bug fixes:
 
