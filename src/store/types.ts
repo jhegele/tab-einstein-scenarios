@@ -28,6 +28,7 @@ export type MappedFields = MappedField[];
 export type Extension = {
     initialized: boolean,
     setupComplete: boolean,
+    password: string,
     predictionResponse?: SFDCPredictionResponse
 }
 

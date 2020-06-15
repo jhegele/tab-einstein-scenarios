@@ -37,6 +37,8 @@ export const Authenticate: React.FC<AuthenticateProps> = ({ onAuthenticated }) =
     useEffect(() => {
         const channel = pusher.subscribe('sfdc-auth');
         channel.bind(channelId, (authResponse: SFDCAuthResponse) => {
+            // TODO: Handle error responses more gracefully. Error response from SFDC
+            // should have the form {error: string, error_description: string}
             setAuth(authResponse);
         })
         extensions.initializeDialogAsync()

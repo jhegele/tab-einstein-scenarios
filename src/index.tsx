@@ -57,7 +57,7 @@ const App: React.FC = () => {
     return (
         <Provider store={store}>
             <Global styles={resets} />
-            <Router basename={`v${env_APP_VERSION}`}>
+            <Router>
                 <Switch>
                     <Route path='/setup'>
                         <Setup />

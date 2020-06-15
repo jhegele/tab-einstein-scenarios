@@ -2,6 +2,8 @@
 
 The options below control how content is displayed on the Predict page within the extension.
 
+![Predict Configuration](../static/img/predict-settings.png)
+
 ## Text Size
 
 Specify the value, unit, and weight of the text displayed on the Predict page. [More info on text configuration](../shared/text-config.md).

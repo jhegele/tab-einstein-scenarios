@@ -2,6 +2,8 @@
 
 The options below control how content is displayed on the Explain page within the extension. The Explain page consists, primarily, of two columns of information: the Value column which provides the impact value of what is shown in the Explanation column, and the Explanation column which provides the column and value or values that drove the impact detailed in the Value column.
 
+![Explain Configuration](../static/img/explain-settings.png)
+
 ## Arrow Colors
 
 Sets the color used when each arrow is displayed. The up arrow is displayed for any result where the value is > 0 while the down arrow is used for any result where the value is < 0.

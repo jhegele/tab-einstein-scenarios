@@ -2,6 +2,8 @@
 
 The options below control how content is displayed on the Action page within the extension. The Action page handles displaying Einstein's "next best action" suggestions. Within the extension, these explanations (if more than one suggestion is returned by Einstein) are navigable using a set of arrows. The arrow color is set based on the accent color which can be configured in the [Global Preferences](./global.md).
 
+![Action Configuration](../static/img/action-settings.png)
+
 ## Primary Text Formatting
 
 Specify the value, unit, and weight of the text displayed at the top of the results. [More info on text configuration](../shared/text-config.md).
