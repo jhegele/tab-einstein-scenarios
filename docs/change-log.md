@@ -1,5 +1,12 @@
 # Change Log
 
+## v0.3.1
+_Released on: 16 June 2020_
+
+This is a minor release consisting of critical bug fixes detailed below.
+
+* Fixed a bug where a dashboard with no Tableau parameters would allow the user to enter the setup phase, authenticate to Salesforce and then show a blank screen.
+
 ## v0.3.0
 _Released on: 15 June 2020_
 
