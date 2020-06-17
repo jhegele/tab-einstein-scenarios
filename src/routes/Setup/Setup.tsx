@@ -32,7 +32,7 @@ export const Setup: React.FC = () => {
                     dataType: p.dataType
                 } as DashboardParam))
                 if (initPayload.length === 0) {
-                    const msg = 'This extension requires that you have at least on Tableau parameter that can be ' +
+                    const msg = 'This extension requires that you have at least one Tableau parameter that can be ' +
                                 'be mapped to a corresponding Einstein model parameter. Your dashboard contains ' +
                                 'no Tableau parameters. Please create at least one parameter, then try again.'
                     alert(msg);
