@@ -31,12 +31,19 @@ export const Setup: React.FC = () => {
                     name: p.name,
                     dataType: p.dataType
                 } as DashboardParam))
-                ui.displayDialogAsync(url, JSON.stringify(initPayload), {
-                    width: 800,
-                    height: 600
-                })
-                    .then(() => history.push('/'))
-                    .catch(() => console.log('Setup manually cancelled by user!'))
+                if (initPayload.length === 0) {
+                    const msg = 'This extension requires that you have at least one Tableau parameter that can be ' +
+                                'be mapped to a corresponding Einstein model parameter. Your dashboard contains ' +
+                                'no Tableau parameters. Please create at least one parameter, then try again.'
+                    alert(msg);
+                } else {
+                    ui.displayDialogAsync(url, JSON.stringify(initPayload), {
+                        width: 800,
+                        height: 600
+                    })
+                        .then(() => history.push('/'))
+                        .catch(() => console.log('Setup manually cancelled by user!'))
+                }
             })
     }
 
