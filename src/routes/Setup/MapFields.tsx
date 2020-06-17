@@ -77,12 +77,13 @@ export const MapFields: React.FC<MapFieldsProps> = ({ auth, predictionDef, param
                     score: stringSimilarity.compareTwoStrings(field, p.name)
                 }));
                 similarities.sort((a, b) => b.score - a.score);
-                // console.log(field, similarities);
-                if (similarities[0].score >= 0.70) {
-                    initMappedFields.push({
-                        einFieldName: field,
-                        tabParamName: similarities[0].param
-                    })
+                if (similarities.length > 0) {
+                    if (similarities[0].score >= 0.70) {
+                        initMappedFields.push({
+                            einFieldName: field,
+                            tabParamName: similarities[0].param
+                        })
+                    }
                 }
                 setMappedFields(initMappedFields);
             })
