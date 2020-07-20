@@ -21,7 +21,7 @@
     "@tableau/tableau-ui": "^3.0.0",
     "@tippyjs/react": "^4.0.2",
     "axios": "^0.19.2",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "numeral": "^2.0.6",
     "pusher-js": "^6.0.3",
     "react": "^16.13.1",
