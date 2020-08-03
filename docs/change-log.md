@@ -1,5 +1,13 @@
 # Change Log
 
+## v0.3.3
+
+_Released on 3 Aug 2020_
+
+This is a minor release consisting of security fixes detailed below.
+
+- Upgraded elliptical and dot-prop dependencies to remove security vulnerabilities in old versions. Neither library is a direct dependency of this project.
+
 ## v0.3.2
 
 _Released on: 23 July 2020_
