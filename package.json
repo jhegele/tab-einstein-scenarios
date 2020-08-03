@@ -1,6 +1,6 @@
 {
   "name": "tab-ext-einstein-scenarios",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "A Tableau extension that allows \"what if\" style scenario analysis powered by Einstein Discovery's predictive models.",
   "main": "index.js",
   "repository": "git@github.com:jhegele/tab-einstein-scenarios.git",
