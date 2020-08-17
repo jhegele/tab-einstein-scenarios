@@ -1,59 +1,73 @@
 import React from 'react';
 import { css } from '@emotion/core';
-import { Button } from '@tableau/tableau-ui';
+import { Button, DropdownSelect } from '@tableau/tableau-ui';
+import stringsAll, { StringsLanguages } from '../../strings';
+import { useSelector, shallowEqual } from 'react-redux';
+import { RootState } from '../../store';
 
 const cssOuterContainer = css`
-    display: flex;
-    height: 100%;
-    width: 100%;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-`; 
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 const cssContent = css`
-    margin: 10px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    display: flex;
+  margin: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 `;
 
 interface SetupDisplayProps {
-    isAuthoring?: boolean;
-    onOpenSetupDialog: () => void;
+  isAuthoring?: boolean;
+  onOpenSetupDialog: () => void;
 }
 
-export const SetupDisplay: React.FC<SetupDisplayProps> = ({ isAuthoring, onOpenSetupDialog }) => {
+export const SetupDisplay: React.FC<SetupDisplayProps> = ({
+  isAuthoring,
+  onOpenSetupDialog,
+}) => {
+  const { preferences } = useSelector(
+    (state: RootState) => state,
+    shallowEqual
+  );
 
-    let content: React.ReactNode = (
-        <div css={cssContent}>
-            This extension requires configuration. Please contact the creator/maintainer 
-            of this dashboard and ask that they complete the setup process.
+  const language: StringsLanguages = preferences.global.language;
+  const { messages, components } = stringsAll[language].strings.setup.launch;
+  const languageSelect = [];
+  for (const langCode in stringsAll) {
+    languageSelect.push({
+      code: langCode,
+      localizedName: stringsAll[langCode as StringsLanguages].name.local,
+    });
+  }
+
+  let content: React.ReactNode = (
+    <div css={cssContent}>{messages.requiresConfig}</div>
+  );
+
+  if (isAuthoring)
+    content = (
+      <div css={cssContent}>
+        <div>
+          <DropdownSelect kind="line" value={language}>
+            {languageSelect.map((l) => (
+              <option value={l.code}>{l.localizedName}</option>
+            ))}
+          </DropdownSelect>
         </div>
-    )
-
-    if (isAuthoring) content = (
-        <div css={cssContent}>
-            <div>
-                Please complete the setup process in order to start generating predictions
-                from Einstein.
-            </div>
-            <div>
-                <Button
-                    kind='primary'
-                    onClick={onOpenSetupDialog}
-                >
-                    Open Setup
-                </Button>
-            </div>
+        <div>{messages.completeSetup}</div>
+        <div>
+          <Button kind="primary" onClick={onOpenSetupDialog}>
+            {components.buttons.openSetup}
+          </Button>
         </div>
-    )
+      </div>
+    );
 
-    return (
-        <div css={cssOuterContainer}>
-            {content}
-        </div>
-    )
-
-}
+  return <div css={cssOuterContainer}>{content}</div>;
+};
