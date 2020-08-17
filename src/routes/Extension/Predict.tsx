@@ -4,7 +4,6 @@ import { RootState } from '../../store';
 import { getPrediction } from '../../api';
 import { Loading, LayoutExtension } from '../../components';
 import type { LayoutExtensionProps } from '../../components/Layouts/Extension';
-import { ParameterChangedEvent } from '@tableau/extensions-api-types';
 import { Prediction } from './Pages/Prediction';
 import { Explain } from './Pages/Explain';
 import { Action } from './Pages/Action';
@@ -64,7 +63,7 @@ export const Predict: React.FC = () => {
           param.addEventListener(
             // @ts-ignore
             'parameter-changed',
-            async (paramEvent: ParameterChangedEvent) => {
+            async () => {
               const updatedValues = await getParamValues();
               setParamValues(updatedValues);
             }
