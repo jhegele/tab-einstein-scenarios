@@ -1,5 +1,14 @@
 # Change Log
 
+## v0.4.0
+
+_Released on 17 Aug 2020_
+
+This is a feature release consisting of the following new features, enhancements, and bug fixes:
+
+- Added ability to specify tab names for Predict, Explain, and Action tabs. This is added as a tactical fix to allow more complete localization of the extension for end users.
+- Upgraded two indirect dependencies (`serialize-javascript` and `prismjs`) to address security vulnerabilities in older versions.
+
 ## v0.3.3
 
 _Released on 3 Aug 2020_
