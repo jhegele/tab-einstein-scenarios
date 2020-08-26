@@ -1,4 +1,5 @@
-import stringsEn from './en';
+import stringsEn from './en.json';
+import stringsEs from './es.json';
 
 const stringsAll = {
   en: {
@@ -7,6 +8,13 @@ const stringsAll = {
       local: 'English',
     },
     strings: stringsEn,
+  },
+  es: {
+    name: {
+      english: 'Spanish',
+      local: 'Español',
+    },
+    strings: stringsEs,
   },
 };
 

@@ -2,8 +2,10 @@ import React from 'react';
 import { css } from '@emotion/core';
 import { Button, DropdownSelect } from '@tableau/tableau-ui';
 import stringsAll, { StringsLanguages } from '../../strings';
-import { useSelector, shallowEqual } from 'react-redux';
+import { getStringsByLanguageCode } from '../../strings/utils';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
+import { preferencesUpdateGlobal } from '../../store/slices/preferences';
 
 const cssOuterContainer = css`
   display: flex;
@@ -35,9 +37,12 @@ export const SetupDisplay: React.FC<SetupDisplayProps> = ({
     (state: RootState) => state,
     shallowEqual
   );
+  const dispatch = useDispatch();
 
   const language: StringsLanguages = preferences.global.language;
-  const { messages, components } = stringsAll[language].strings.setup.launch;
+  const { messages, components } = getStringsByLanguageCode(
+    language
+  ).strings.setup.launch;
   const languageSelect = [];
   for (const langCode in stringsAll) {
     languageSelect.push({
@@ -53,14 +58,50 @@ export const SetupDisplay: React.FC<SetupDisplayProps> = ({
   if (isAuthoring)
     content = (
       <div css={cssContent}>
-        <div>
-          <DropdownSelect kind="line" value={language}>
+        <div
+          css={css`
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: row;
+          `}
+        >
+          <div
+            css={css`
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              margin-right: 5px;
+            `}
+          >
+            {components.selects.language.label}
+          </div>
+          <DropdownSelect
+            kind="line"
+            value={language}
+            onChange={({ target: { value } }) =>
+              dispatch(
+                preferencesUpdateGlobal({
+                  ...preferences.global,
+                  language: value as StringsLanguages,
+                })
+              )
+            }
+          >
             {languageSelect.map((l) => (
-              <option value={l.code}>{l.localizedName}</option>
+              <option key={l.code} value={l.code}>
+                {l.localizedName}
+              </option>
             ))}
           </DropdownSelect>
         </div>
-        <div>{messages.completeSetup}</div>
+        <div
+          css={css`
+            margin-bottom: 10px;
+          `}
+        >
+          {messages.completeSetup}
+        </div>
         <div>
           <Button kind="primary" onClick={onOpenSetupDialog}>
             {components.buttons.openSetup}

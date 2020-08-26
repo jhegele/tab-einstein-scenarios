@@ -1,0 +1,86 @@
+{
+  "setup": {
+    "launch": {
+      "messages": {
+        "requiresConfig": "Esta extensión requiere configuración. Comuníquese con el creador / encargado del mantenimiento de este panel y pídale que complete el proceso de configuración.",
+        "completeSetup": "Complete el proceso de configuración para comenzar a generar predicciones de Einstein."
+      },
+      "components": {
+        "buttons": {
+          "openSetup": "Abrir Configuración"
+        },
+        "selects": {
+          "language": {
+            "label": "Idioma"
+          }
+        }
+      }
+    },
+    "authenticate": {
+      "messages": {
+        "header": "Iniciar Sesión en Salesforce",
+        "explanation": "Para configurar esta extensión, deberá iniciar sesión en su cuenta de Salesforce. Después de hacer clic en el botón Autenticar a continuación, saldrá de Tableau y se abrirá la página de autenticación de Salesforce en su navegador predeterminado. Una vez que complete la autenticación, puede volver a Tableau y continuar con el proceso de configuración."
+      },
+      "components": {
+        "buttons": {
+          "authenticate": "Autenticar"
+        }
+      }
+    },
+    "selectPredictionDefinition": {
+      "messages": {
+        "header": "Einstein - Seleccionar Definición de Predicción",
+        "explanation": "En el menú de abajo, seleccione la definición de predicción de Einstein que le gustaría usar. Tenga en cuenta que, actualmente, esta extensión solo admite definiciones de predicción con un solo modelo. Si su definición de predicción contiene varios modelos, la extensión seguirá funcionando; simplemente seleccionará el primer modelo entre el conjunto de modelos."
+      },
+      "components": {
+        "buttons": {
+          "next": "Siguiente",
+          "back": "Atrás"
+        },
+        "selects": {
+          "predictionDefs": {
+            "label": "Definición de la Predicción de Einstein"
+          }
+        }
+      }
+    },
+    "mapFields": {
+      "messages": {
+        "header": "Einstein - Mapear Etiquetas",
+        "explanation": "Deberá asignar los parámetros de su modelo de Einstein a los parámetros de Tableau disponibles en su panel a continuación. Si no desea utilizar un parámetro de Einstein, simplemente seleccione NULL y se excluirá. Asegúrese de crear controles de parámetros para cualquier entrada que desee que sus usuarios puedan modificar."
+      },
+      "components": {
+        "tables": {
+          "fieldMap": {
+            "headers": {
+              "einsteinModelParams": "Parámetros del Modelo de Einstein",
+              "tableauParams": "Parámetros de Tableau"
+            }
+          }
+        },
+        "buttons": {
+          "next": "Siguiente",
+          "back": "Atrás"
+        }
+      }
+    },
+    "confirm": {
+      "messages": {
+        "header": "Confirmar Configuración"
+      },
+      "components": {
+        "labels": {
+          "salesforceInstance": "Instancia de Salesforce",
+          "predictionDefinition": "Definición de la Predicción",
+          "fieldMapping": "Asignación de Etiquetas",
+          "einsteinParam": "Parámetro del Modelo de Einstein",
+          "tableauParam": "Parámetro de Tableau"
+        },
+        "buttons": {
+          "back": "Atrás",
+          "done": "Hecho"
+        }
+      }
+    }
+  }
+}

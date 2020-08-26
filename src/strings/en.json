@@ -1,0 +1,86 @@
+{
+  "setup": {
+    "launch": {
+      "messages": {
+        "requiresConfig": "This extension requires configuration. Please contact the creator/maintainer of this dashboard and ask that they complete the setup process.",
+        "completeSetup": "Please complete the setup process in order to start generating predictions from Einstein."
+      },
+      "components": {
+        "buttons": {
+          "openSetup": "Open Setup"
+        },
+        "selects": {
+          "language": {
+            "label": "Language"
+          }
+        }
+      }
+    },
+    "authenticate": {
+      "messages": {
+        "header": "Login to Salesforce",
+        "explanation": "In order to setup this extension, you'll need to login to your Salesforce account. After you click the Authenticate button below, you'll be taken outside of Tableau and and the Salesforce authentication page will open in your default browser. Once you complete authentication, you can return to Tableau and continue the setup process."
+      },
+      "components": {
+        "buttons": {
+          "authenticate": "Authenticate"
+        }
+      }
+    },
+    "selectPredictionDefinition": {
+      "messages": {
+        "header": "Einstein - Select Prediction Definition",
+        "explanation": "From the menu below, select the Einstein prediction definition that you'd like to use. Please note that, currently, this extension only supports prediction definitions with a single model. If your prediction definition contains multiple models, the extension will still work it will simply select the first model among the set of models."
+      },
+      "components": {
+        "buttons": {
+          "next": "Next",
+          "back": "Back"
+        },
+        "selects": {
+          "predictionDefs": {
+            "label": "Einstein Prediction Definition"
+          }
+        }
+      }
+    },
+    "mapFields": {
+      "messages": {
+        "header": "Einstein - Map Fields",
+        "explanation": "You will need to map parameters from your Einstein model to Tableau parameters available in your dashboard below. If you do not wish to use a parameter from Einstein, simply select NULL and it will be excluded. Make sure that you build parameter controls for any inputs that you want your users to be able to modify."
+      },
+      "components": {
+        "tables": {
+          "fieldMap": {
+            "headers": {
+              "einsteinModelParams": "Einstein Model Parameters",
+              "tableauParams": "Tableau Parameters"
+            }
+          }
+        },
+        "buttons": {
+          "next": "Next",
+          "back": "Back"
+        }
+      }
+    },
+    "confirm": {
+      "messages": {
+        "header": "Confirm Setup"
+      },
+      "components": {
+        "labels": {
+          "salesforceInstance": "Salesforce Instance",
+          "predictionDefinition": "Prediction Definition",
+          "fieldMapping": "Field Mapping",
+          "einsteinParam": "Einstein Model Parameters",
+          "tableauParam": "Tableau Parameters"
+        },
+        "buttons": {
+          "back": "Back",
+          "done": "Done"
+        }
+      }
+    }
+  }
+}
