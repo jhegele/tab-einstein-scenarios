@@ -6,6 +6,7 @@ import { getStringsByLanguageCode } from '../../strings/utils';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
 import { preferencesUpdateGlobal } from '../../store/slices/preferences';
+import { AiOutlineWarning } from 'react-icons/ai';
 
 const cssOuterContainer = css`
   display: flex;
@@ -24,6 +25,38 @@ const cssContent = css`
   display: flex;
 `;
 
+const cssContainerTranslateWarning = css`
+  border-radius: 5px;
+  padding: 10px;
+  color: #353535;
+  font-size: 11px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+`;
+
+const cssContainerTranslateWarningIcon = css`
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const cssContainerTranslateWarningText = css`
+  color: #353535;
+  font-size: 11px;
+  flex: 1;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+`;
+
+const cssTranslateWarningIcon = css`
+  color: #c3bc3f;
+  width: 25px;
+  height: 25px;
+`;
+
 interface SetupDisplayProps {
   isAuthoring?: boolean;
   onOpenSetupDialog: () => void;
@@ -40,15 +73,26 @@ export const SetupDisplay: React.FC<SetupDisplayProps> = ({
   const dispatch = useDispatch();
 
   const language: StringsLanguages = preferences.global.language;
-  const { messages, components } = getStringsByLanguageCode(
-    language
-  ).strings.setup.launch;
+  const {
+    translationStatus,
+    strings: {
+      setup: {
+        launch: { components, messages },
+      },
+    },
+  } = getStringsByLanguageCode(language);
   const languageSelect = [];
   for (const langCode in stringsAll) {
     languageSelect.push({
       code: langCode,
       localizedName: stringsAll[langCode as StringsLanguages].name.local,
+      englishName: stringsAll[langCode as StringsLanguages].name.english,
     });
+  }
+  if (languageSelect.length > 0) {
+    languageSelect.sort((a, b) =>
+      a.englishName > b.englishName ? 1 : a.englishName < b.englishName ? -1 : 0
+    );
   }
 
   let content: React.ReactNode = (
@@ -90,7 +134,7 @@ export const SetupDisplay: React.FC<SetupDisplayProps> = ({
           >
             {languageSelect.map((l) => (
               <option key={l.code} value={l.code}>
-                {l.localizedName}
+                {`${l.englishName} (${l.localizedName})`}
               </option>
             ))}
           </DropdownSelect>
@@ -107,6 +151,18 @@ export const SetupDisplay: React.FC<SetupDisplayProps> = ({
             {components.buttons.openSetup}
           </Button>
         </div>
+        {translationStatus.toLowerCase() !== 'native' ? (
+          <div css={cssContainerTranslateWarning}>
+            <div css={cssContainerTranslateWarningIcon}>
+              <AiOutlineWarning css={cssTranslateWarningIcon} />
+            </div>
+            <div css={cssContainerTranslateWarningText}>
+              This translation was produced by a translation service and not a
+              native speaker. As a result, there may be errors and
+              inconsistencies.
+            </div>
+          </div>
+        ) : null}
       </div>
     );
 

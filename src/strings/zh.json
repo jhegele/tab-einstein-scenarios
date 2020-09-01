@@ -1,0 +1,228 @@
+{
+  "setup": {
+    "launch": {
+      "messages": {
+        "requiresConfig": "此扩展程序需要配置。请联系此信息显示板的创建者/维护者，并要求他们完成设置过程。",
+        "completeSetup": "请完成设置过程，以便开始从爱因斯坦生成预测。"
+      },
+      "components": {
+        "buttons": {
+          "openSetup": "开启设定"
+        },
+        "selects": {
+          "language": {
+            "label": "语言"
+          }
+        }
+      }
+    },
+    "authenticate": {
+      "messages": {
+        "header": "登录到Salesforce",
+        "explanation": "为了设置此扩展程序，您需要登录到Salesforce帐户。单击下面的“身份验证”按钮后，您将被带到Tableau之外，并且Salesforce身份验证页面将在默认浏览器中打开。完成身份验证后，您可以返回Tableau并继续设置过程。"
+      },
+      "components": {
+        "buttons": {
+          "authenticate": "认证"
+        }
+      }
+    },
+    "selectPredictionDefinition": {
+      "messages": {
+        "header": "爱因斯坦-选择预测定义",
+        "explanation": "在下面的菜单中，选择您要使用的爱因斯坦预测定义。请注意，当前，此扩展仅支持单个模型的预测定义。如果您的预测定义包含多个模型，则扩展将仍然有效，只需在模型集中选择第一个模型即可。"
+      },
+      "components": {
+        "buttons": {
+          "next": "下一个",
+          "back": "背部"
+        },
+        "selects": {
+          "predictionDefs": {
+            "label": "爱因斯坦预测定义"
+          }
+        }
+      }
+    },
+    "mapFields": {
+      "messages": {
+        "header": "爱因斯坦-地图领域",
+        "explanation": "您将需要将爱因斯坦模型中的参数映射到下面的仪表板中可用的Tableau参数。如果您不想使用爱因斯坦的参数，只需选择NULL，它将被排除。确保为希望用户能够修改的任何输入构建参数控件。"
+      },
+      "components": {
+        "tables": {
+          "fieldMap": {
+            "headers": {
+              "einsteinModelParams": "爱因斯坦模型参数",
+              "tableauParams": "参数表"
+            }
+          }
+        },
+        "buttons": {
+          "next": "下一个",
+          "back": "背部"
+        }
+      }
+    },
+    "confirm": {
+      "messages": {
+        "header": "确认设定"
+      },
+      "components": {
+        "labels": {
+          "salesforceInstance": "Salesforce实例",
+          "predictionDefinition": "预测定义",
+          "fieldMapping": "场图",
+          "einsteinParam": "爱因斯坦模型参数",
+          "tableauParam": "参数表"
+        },
+        "buttons": {
+          "back": "背部",
+          "done": "完成"
+        }
+      }
+    }
+  },
+  "preferences": {
+    "header": {
+      "messages": {
+        "title": "配置首选项"
+      },
+      "components": {
+        "buttons": {
+          "done": "完成"
+        },
+        "selects": {
+          "settingsConfig": {
+            "label": "选择要配置的设置：",
+            "options": {
+              "global": "全球",
+              "predict": "预测",
+              "explain": "说明",
+              "action": "行动"
+            }
+          }
+        }
+      }
+    },
+    "global": {
+      "messages": {
+        "boldText": "加粗字体",
+        "normalText": "普通文字"
+      },
+      "components": {
+        "colorPickers": {
+          "backgroundColor": {
+            "label": "背景颜色"
+          },
+          "textColor": {
+            "label": "文字颜色"
+          },
+          "accentColor": {
+            "label": "口音颜色"
+          }
+        }
+      }
+    },
+    "predict": {
+      "components": {
+        "inputs": {
+          "pageName": {
+            "label": "页面名称",
+            "defaultValue": "预测"
+          },
+          "textSizeNumber": {
+            "label": "字体大小"
+          },
+          "prefix": {
+            "label": "字首"
+          },
+          "suffix": {
+            "label": "后缀"
+          }
+        },
+        "selects": {
+          "numberFormatting": {
+            "label": "数字格式"
+          }
+        }
+      }
+    },
+    "explain": {
+      "components": {
+        "inputs": {
+          "pageName": {
+            "label": "页面名称",
+            "defaultValue": "说明"
+          },
+          "headerTextFormattingNumber": {
+            "label": "标题文字格式"
+          },
+          "bodyTextFormattingNumber": {
+            "label": "正文文本格式"
+          }
+        },
+        "colorPickers": {
+          "arrowColors": {
+            "label": "箭头颜色："
+          }
+        },
+        "selects": {
+          "valueFieldNumberFormat": {
+            "label": "值字段-数字格式"
+          },
+          "explanationFieldNumberFormat": {
+            "label": "说明字段-数字格式"
+          }
+        }
+      }
+    },
+    "action": {
+      "components": {
+        "inputs": {
+          "pageName": {
+            "label": "页面名称",
+            "defaultValue": "行动"
+          },
+          "primaryTextFormatting": {
+            "label": "主要文字格式"
+          },
+          "primaryNumberFormatting": {
+            "label": "主号码格式"
+          },
+          "secondaryTextFormatting": {
+            "label": "次要文字格式"
+          },
+          "secondaryNumberFormatting": {
+            "label": "辅助号码格式"
+          }
+        }
+      }
+    }
+  },
+  "tabs": {
+    "explain": {
+      "components": {
+        "tables": {
+          "explainResults": {
+            "headers": {
+              "value": "值",
+              "explanation": "说明"
+            }
+          }
+        }
+      }
+    },
+    "action": {
+      "messages": {
+        "qualifiers": {
+          "primaryText": {
+            "decrease": "减少",
+            "increase": "增加",
+            "noChange": "没变"
+          }
+        }
+      }
+    }
+  }
+}

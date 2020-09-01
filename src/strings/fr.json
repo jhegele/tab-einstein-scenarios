@@ -1,0 +1,228 @@
+{
+  "setup": {
+    "launch": {
+      "messages": {
+        "requiresConfig": "Cette extension nécessite une configuration. Veuillez contacter le créateur / responsable de ce tableau de bord et demandez-lui de terminer le processus de configuration.",
+        "completeSetup": "Veuillez terminer le processus de configuration afin de commencer à générer des prédictions à partir d'Einstein."
+      },
+      "components": {
+        "buttons": {
+          "openSetup": "Ouvrir la configuration"
+        },
+        "selects": {
+          "language": {
+            "label": "Langue"
+          }
+        }
+      }
+    },
+    "authenticate": {
+      "messages": {
+        "header": "Connectez-vous à Salesforce",
+        "explanation": "Pour configurer cette extension, vous devez vous connecter à votre compte Salesforce. Après avoir cliqué sur le bouton Authentifier ci-dessous, vous serez redirigé hors de Tableau et la page d'authentification Salesforce s'ouvrira dans votre navigateur par défaut. Une fois l'authentification terminée, vous pouvez revenir à Tableau et continuer le processus de configuration."
+      },
+      "components": {
+        "buttons": {
+          "authenticate": "Authentifier"
+        }
+      }
+    },
+    "selectPredictionDefinition": {
+      "messages": {
+        "header": "Einstein - Sélectionnez la définition de prédiction",
+        "explanation": "Dans le menu ci-dessous, sélectionnez la définition de prédiction Einstein que vous souhaitez utiliser. Veuillez noter qu'actuellement, cette extension ne prend en charge que les définitions de prédiction avec un seul modèle. Si votre définition de prédiction contient plusieurs modèles, l'extension fonctionnera toujours, elle sélectionnera simplement le premier modèle parmi l'ensemble de modèles."
+      },
+      "components": {
+        "buttons": {
+          "next": "Prochain",
+          "back": "Arrière"
+        },
+        "selects": {
+          "predictionDefs": {
+            "label": "Définition de la prédiction d'Einstein"
+          }
+        }
+      }
+    },
+    "mapFields": {
+      "messages": {
+        "header": "Einstein - Champs de la carte",
+        "explanation": "Vous devrez mapper les paramètres de votre modèle Einstein aux paramètres Tableau disponibles dans votre tableau de bord ci-dessous. Si vous ne souhaitez pas utiliser un paramètre d'Einstein, sélectionnez simplement NULL et il sera exclu. Assurez-vous de créer des contrôles de paramètres pour toutes les entrées que vous souhaitez que vos utilisateurs puissent modifier."
+      },
+      "components": {
+        "tables": {
+          "fieldMap": {
+            "headers": {
+              "einsteinModelParams": "Paramètres du modèle Einstein",
+              "tableauParams": "Tableau Parameters"
+            }
+          }
+        },
+        "buttons": {
+          "next": "Prochain",
+          "back": "Arrière"
+        }
+      }
+    },
+    "confirm": {
+      "messages": {
+        "header": "Confirmer la configuration"
+      },
+      "components": {
+        "labels": {
+          "salesforceInstance": "Instance Salesforce",
+          "predictionDefinition": "Définition de la prédiction",
+          "fieldMapping": "Cartographie de terrain",
+          "einsteinParam": "Paramètres du modèle Einstein",
+          "tableauParam": "Tableau Parameters"
+        },
+        "buttons": {
+          "back": "Arrière",
+          "done": "Terminé"
+        }
+      }
+    }
+  },
+  "preferences": {
+    "header": {
+      "messages": {
+        "title": "Configurer les préférences"
+      },
+      "components": {
+        "buttons": {
+          "done": "Terminé"
+        },
+        "selects": {
+          "settingsConfig": {
+            "label": "Sélectionnez les paramètres à configurer:",
+            "options": {
+              "global": "Global",
+              "predict": "Prédire",
+              "explain": "Explique",
+              "action": "action"
+            }
+          }
+        }
+      }
+    },
+    "global": {
+      "messages": {
+        "boldText": "Texte en gras",
+        "normalText": "Texte normal"
+      },
+      "components": {
+        "colorPickers": {
+          "backgroundColor": {
+            "label": "Couleur de l'arrière plan"
+          },
+          "textColor": {
+            "label": "Couleur du texte"
+          },
+          "accentColor": {
+            "label": "Couleur d'accent"
+          }
+        }
+      }
+    },
+    "predict": {
+      "components": {
+        "inputs": {
+          "pageName": {
+            "label": "Nom de la page",
+            "defaultValue": "Prédire"
+          },
+          "textSizeNumber": {
+            "label": "Taille du texte"
+          },
+          "prefix": {
+            "label": "Préfixe"
+          },
+          "suffix": {
+            "label": "Suffixe"
+          }
+        },
+        "selects": {
+          "numberFormatting": {
+            "label": "Formatage des nombres"
+          }
+        }
+      }
+    },
+    "explain": {
+      "components": {
+        "inputs": {
+          "pageName": {
+            "label": "Nom de la page",
+            "defaultValue": "Explique"
+          },
+          "headerTextFormattingNumber": {
+            "label": "Formatage du texte de l'en-tête"
+          },
+          "bodyTextFormattingNumber": {
+            "label": "Formatage du corps du texte"
+          }
+        },
+        "colorPickers": {
+          "arrowColors": {
+            "label": "Couleurs des flèches:"
+          }
+        },
+        "selects": {
+          "valueFieldNumberFormat": {
+            "label": "Champ de valeur - Format de nombre"
+          },
+          "explanationFieldNumberFormat": {
+            "label": "Champ d'explication - Format des nombres"
+          }
+        }
+      }
+    },
+    "action": {
+      "components": {
+        "inputs": {
+          "pageName": {
+            "label": "Nom de la page",
+            "defaultValue": "action"
+          },
+          "primaryTextFormatting": {
+            "label": "Formatage du texte principal"
+          },
+          "primaryNumberFormatting": {
+            "label": "Formatage du numéro principal"
+          },
+          "secondaryTextFormatting": {
+            "label": "Formatage de texte secondaire"
+          },
+          "secondaryNumberFormatting": {
+            "label": "Formatage des nombres secondaires"
+          }
+        }
+      }
+    }
+  },
+  "tabs": {
+    "explain": {
+      "components": {
+        "tables": {
+          "explainResults": {
+            "headers": {
+              "value": "Valeur",
+              "explanation": "Explication"
+            }
+          }
+        }
+      }
+    },
+    "action": {
+      "messages": {
+        "qualifiers": {
+          "primaryText": {
+            "decrease": "diminution",
+            "increase": "augmenter",
+            "noChange": "Pas de changement"
+          }
+        }
+      }
+    }
+  }
+}

@@ -10,6 +10,8 @@ import {
 } from '../../../components';
 import { css } from '@emotion/core';
 import { TextField } from '@tableau/tableau-ui';
+import { StringsLanguages } from '../../../strings';
+import { getStringsByLanguageCode } from '../../../strings/utils';
 
 interface ExplainPrefsContentProps {
   prediction: SFDCPredictionResponse;
@@ -26,17 +28,24 @@ export const ExplainPrefsContent: React.FC<ExplainPrefsContentProps> = ({
 interface ExplainPrefsControlsProps {
   explainPrefs: PreferencesExplain;
   onSettingChanged: (newPrefs: PreferencesExplain) => void;
+  language: StringsLanguages;
 }
 
 export const ExplainPrefsControls: React.FC<ExplainPrefsControlsProps> = ({
   explainPrefs,
   onSettingChanged,
+  language,
 }) => {
+  const { components } = getStringsByLanguageCode(
+    language
+  ).strings.preferences.explain;
+
   return (
     <React.Fragment>
       <TextField
-        label="Page Name"
+        label={components.inputs.pageName.label}
         kind="line"
+        // TODO: Figure out how to override defaults from Redux in cases where language is not English
         value={explainPrefs.pageName}
         onChange={({ target: { value } }) =>
           onSettingChanged({ ...explainPrefs, pageName: value })
@@ -56,7 +65,7 @@ export const ExplainPrefsControls: React.FC<ExplainPrefsControlsProps> = ({
             color: #333;
           `}
         >
-          Arrow Colors:
+          {components.colorPickers.arrowColors.label}
         </div>
         <ColorPicker
           initColor={explainPrefs.arrowUpColor}
@@ -77,21 +86,21 @@ export const ExplainPrefsControls: React.FC<ExplainPrefsControlsProps> = ({
       </div>
       <TextFormatter
         textOptions={explainPrefs.textHeader}
-        label="Header Text Formatting"
+        label={components.inputs.headerTextFormattingNumber.label}
         onOptionUpdate={(updatedTextOpts) =>
           onSettingChanged({ ...explainPrefs, textHeader: updatedTextOpts })
         }
       />
       <TextFormatter
         textOptions={explainPrefs.textBody}
-        label="Body Text Formatting"
+        label={components.inputs.bodyTextFormattingNumber.label}
         onOptionUpdate={(updatedTextOpts) =>
           onSettingChanged({ ...explainPrefs, textBody: updatedTextOpts })
         }
       />
       <NumberFormatter
         numberFormat={explainPrefs.valueNumberFormatting}
-        label="Value Field - Number Format"
+        label={components.selects.valueFieldNumberFormat.label}
         onFormatUpdate={(updatedNumFormat) =>
           onSettingChanged({
             ...explainPrefs,
@@ -101,7 +110,7 @@ export const ExplainPrefsControls: React.FC<ExplainPrefsControlsProps> = ({
       />
       <NumberFormatter
         numberFormat={explainPrefs.explanationNumberFormatting}
-        label="Explanation Field - Number Format"
+        label={components.selects.explanationFieldNumberFormat.label}
         onFormatUpdate={(updatedNumFormat) =>
           onSettingChanged({
             ...explainPrefs,

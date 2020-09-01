@@ -7,7 +7,7 @@
       },
       "components": {
         "buttons": {
-          "openSetup": "Abrir Configuración"
+          "openSetup": "Abrir configuración"
         },
         "selects": {
           "language": {
@@ -18,7 +18,7 @@
     },
     "authenticate": {
       "messages": {
-        "header": "Iniciar Sesión en Salesforce",
+        "header": "Iniciar sesión en Salesforce",
         "explanation": "Para configurar esta extensión, deberá iniciar sesión en su cuenta de Salesforce. Después de hacer clic en el botón Autenticar a continuación, saldrá de Tableau y se abrirá la página de autenticación de Salesforce en su navegador predeterminado. Una vez que complete la autenticación, puede volver a Tableau y continuar con el proceso de configuración."
       },
       "components": {
@@ -29,56 +29,198 @@
     },
     "selectPredictionDefinition": {
       "messages": {
-        "header": "Einstein - Seleccionar Definición de Predicción",
+        "header": "Einstein - Seleccionar definición de predicción",
         "explanation": "En el menú de abajo, seleccione la definición de predicción de Einstein que le gustaría usar. Tenga en cuenta que, actualmente, esta extensión solo admite definiciones de predicción con un solo modelo. Si su definición de predicción contiene varios modelos, la extensión seguirá funcionando; simplemente seleccionará el primer modelo entre el conjunto de modelos."
       },
       "components": {
         "buttons": {
-          "next": "Siguiente",
-          "back": "Atrás"
+          "next": "próximo",
+          "back": "Espalda"
         },
         "selects": {
           "predictionDefs": {
-            "label": "Definición de la Predicción de Einstein"
+            "label": "Definición de la predicción de Einstein"
           }
         }
       }
     },
     "mapFields": {
       "messages": {
-        "header": "Einstein - Mapear Etiquetas",
+        "header": "Einstein - Campos de mapa",
         "explanation": "Deberá asignar los parámetros de su modelo de Einstein a los parámetros de Tableau disponibles en su panel a continuación. Si no desea utilizar un parámetro de Einstein, simplemente seleccione NULL y se excluirá. Asegúrese de crear controles de parámetros para cualquier entrada que desee que sus usuarios puedan modificar."
       },
       "components": {
         "tables": {
           "fieldMap": {
             "headers": {
-              "einsteinModelParams": "Parámetros del Modelo de Einstein",
-              "tableauParams": "Parámetros de Tableau"
+              "einsteinModelParams": "Parámetros del modelo de Einstein",
+              "tableauParams": "Tabla de parámetros"
             }
           }
         },
         "buttons": {
-          "next": "Siguiente",
-          "back": "Atrás"
+          "next": "próximo",
+          "back": "Espalda"
         }
       }
     },
     "confirm": {
       "messages": {
-        "header": "Confirmar Configuración"
+        "header": "Confirmar configuración"
       },
       "components": {
         "labels": {
           "salesforceInstance": "Instancia de Salesforce",
-          "predictionDefinition": "Definición de la Predicción",
-          "fieldMapping": "Asignación de Etiquetas",
-          "einsteinParam": "Parámetro del Modelo de Einstein",
-          "tableauParam": "Parámetro de Tableau"
+          "predictionDefinition": "Definición de predicción",
+          "fieldMapping": "Mapeo de campo",
+          "einsteinParam": "Parámetros del modelo de Einstein",
+          "tableauParam": "Tabla de parámetros"
         },
         "buttons": {
-          "back": "Atrás",
+          "back": "Espalda",
           "done": "Hecho"
+        }
+      }
+    }
+  },
+  "preferences": {
+    "header": {
+      "messages": {
+        "title": "Configurar preferencias"
+      },
+      "components": {
+        "buttons": {
+          "done": "Hecho"
+        },
+        "selects": {
+          "settingsConfig": {
+            "label": "Seleccione los ajustes para configurar:",
+            "options": {
+              "global": "Global",
+              "predict": "Predecir",
+              "explain": "Explique",
+              "action": "Acción"
+            }
+          }
+        }
+      }
+    },
+    "global": {
+      "messages": {
+        "boldText": "Texto en negrita",
+        "normalText": "Texto normal"
+      },
+      "components": {
+        "colorPickers": {
+          "backgroundColor": {
+            "label": "Color de fondo"
+          },
+          "textColor": {
+            "label": "Color de texto"
+          },
+          "accentColor": {
+            "label": "Acentuar el color"
+          }
+        }
+      }
+    },
+    "predict": {
+      "components": {
+        "inputs": {
+          "pageName": {
+            "label": "Nombre de la página",
+            "defaultValue": "Predecir"
+          },
+          "textSizeNumber": {
+            "label": "Tamano del texto"
+          },
+          "prefix": {
+            "label": "Prefijo"
+          },
+          "suffix": {
+            "label": "Sufijo"
+          }
+        },
+        "selects": {
+          "numberFormatting": {
+            "label": "Formato de número"
+          }
+        }
+      }
+    },
+    "explain": {
+      "components": {
+        "inputs": {
+          "pageName": {
+            "label": "Nombre de la página",
+            "defaultValue": "Explique"
+          },
+          "headerTextFormattingNumber": {
+            "label": "Formato del texto del encabezado"
+          },
+          "bodyTextFormattingNumber": {
+            "label": "Formato del cuerpo del texto"
+          }
+        },
+        "colorPickers": {
+          "arrowColors": {
+            "label": "Colores de flecha:"
+          }
+        },
+        "selects": {
+          "valueFieldNumberFormat": {
+            "label": "Campo de valor: formato de número"
+          },
+          "explanationFieldNumberFormat": {
+            "label": "Campo de explicación - Formato de número"
+          }
+        }
+      }
+    },
+    "action": {
+      "components": {
+        "inputs": {
+          "pageName": {
+            "label": "Nombre de la página",
+            "defaultValue": "Acción"
+          },
+          "primaryTextFormatting": {
+            "label": "Formato de texto principal"
+          },
+          "primaryNumberFormatting": {
+            "label": "Formato de número principal"
+          },
+          "secondaryTextFormatting": {
+            "label": "Formato de texto secundario"
+          },
+          "secondaryNumberFormatting": {
+            "label": "Formato de número secundario"
+          }
+        }
+      }
+    }
+  },
+  "tabs": {
+    "explain": {
+      "components": {
+        "tables": {
+          "explainResults": {
+            "headers": {
+              "value": "Valor",
+              "explanation": "Explicación"
+            }
+          }
+        }
+      }
+    },
+    "action": {
+      "messages": {
+        "qualifiers": {
+          "primaryText": {
+            "decrease": "disminución",
+            "increase": "incrementar",
+            "noChange": "Ningún cambio"
+          }
         }
       }
     }

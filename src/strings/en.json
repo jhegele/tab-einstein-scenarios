@@ -82,5 +82,147 @@
         }
       }
     }
+  },
+  "preferences": {
+    "header": {
+      "messages": {
+        "title": "Configure Preferences"
+      },
+      "components": {
+        "buttons": {
+          "done": "Done"
+        },
+        "selects": {
+          "settingsConfig": {
+            "label": "Select settings to configure:",
+            "options": {
+              "global": "Global",
+              "predict": "Predict",
+              "explain": "Explain",
+              "action": "Action"
+            }
+          }
+        }
+      }
+    },
+    "global": {
+      "messages": {
+        "boldText": "Bold Text",
+        "normalText": "Normal Text"
+      },
+      "components": {
+        "colorPickers": {
+          "backgroundColor": {
+            "label": "Background Color"
+          },
+          "textColor": {
+            "label": "Text Color"
+          },
+          "accentColor": {
+            "label": "Accent Color"
+          }
+        }
+      }
+    },
+    "predict": {
+      "components": {
+        "inputs": {
+          "pageName": {
+            "label": "Page Name",
+            "defaultValue": "Predict"
+          },
+          "textSizeNumber": {
+            "label": "Text Size"
+          },
+          "prefix": {
+            "label": "Prefix"
+          },
+          "suffix": {
+            "label": "Suffix"
+          }
+        },
+        "selects": {
+          "numberFormatting": {
+            "label": "Number Formatting"
+          }
+        }
+      }
+    },
+    "explain": {
+      "components": {
+        "inputs": {
+          "pageName": {
+            "label": "Page Name",
+            "defaultValue": "Explain"
+          },
+          "headerTextFormattingNumber": {
+            "label": "Header Text Formatting"
+          },
+          "bodyTextFormattingNumber": {
+            "label": "Body Text Formatting"
+          }
+        },
+        "colorPickers": {
+          "arrowColors": {
+            "label": "Arrow Colors:"
+          }
+        },
+        "selects": {
+          "valueFieldNumberFormat": {
+            "label": "Value Field - Number Format"
+          },
+          "explanationFieldNumberFormat": {
+            "label": "Explanation Field - Number Format"
+          }
+        }
+      }
+    },
+    "action": {
+      "components": {
+        "inputs": {
+          "pageName": {
+            "label": "Page Name",
+            "defaultValue": "Action"
+          },
+          "primaryTextFormatting": {
+            "label": "Primary Text Formatting"
+          },
+          "primaryNumberFormatting": {
+            "label": "Primary Number Formatting"
+          },
+          "secondaryTextFormatting": {
+            "label": "Secondary Text Formatting"
+          },
+          "secondaryNumberFormatting": {
+            "label": "Secondary Number Formatting"
+          }
+        }
+      }
+    }
+  },
+  "tabs": {
+    "explain": {
+      "components": {
+        "tables": {
+          "explainResults": {
+            "headers": {
+              "value": "Value",
+              "explanation": "Explanation"
+            }
+          }
+        }
+      }
+    },
+    "action": {
+      "messages": {
+        "qualifiers": {
+          "primaryText": {
+            "decrease": "decrease",
+            "increase": "increase",
+            "noChange": "No change"
+          }
+        }
+      }
+    }
   }
 }

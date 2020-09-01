@@ -4,6 +4,8 @@ import { SFDCPredictionResponse } from '../../../api/types';
 import { Preferences, PreferencesPredict } from '../../../store/types';
 import { TextField } from '@tableau/tableau-ui';
 import { TextFormatter, NumberFormatter } from '../../../components';
+import { StringsLanguages } from '../../../strings';
+import { getStringsByLanguageCode } from '../../../strings/utils';
 
 interface PredictPrefsContentProps {
   prediction: SFDCPredictionResponse;
@@ -20,24 +22,31 @@ export const PredictPrefsContent: React.FC<PredictPrefsContentProps> = ({
 interface PredictPrefsControlsProps {
   predictPrefs: PreferencesPredict;
   onSettingChanged: (newPrefs: PreferencesPredict) => void;
+  language: StringsLanguages;
 }
 
 export const PredictPrefsControls: React.FC<PredictPrefsControlsProps> = ({
   predictPrefs,
   onSettingChanged,
+  language,
 }) => {
+  const { components } = getStringsByLanguageCode(
+    language
+  ).strings.preferences.predict;
+
   return (
     <React.Fragment>
       <TextField
-        label="Page Name"
+        label={components.inputs.pageName.label}
         kind="line"
+        // TODO: Figure out how to override default page name from redux in cases where the language is not English
         value={predictPrefs.pageName}
         onChange={({ target: { value } }) =>
           onSettingChanged({ ...predictPrefs, pageName: value })
         }
       />
       <TextFormatter
-        label="Text Size"
+        label={components.inputs.textSizeNumber.label}
         textOptions={predictPrefs.text}
         onOptionUpdate={(updatedTextPrefs) =>
           onSettingChanged({ ...predictPrefs, text: updatedTextPrefs })
@@ -45,7 +54,7 @@ export const PredictPrefsControls: React.FC<PredictPrefsControlsProps> = ({
       />
       <TextField
         kind="line"
-        label="Prefix"
+        label={components.inputs.prefix.label}
         onChange={({ target: { value } }) =>
           onSettingChanged({ ...predictPrefs, prefix: value })
         }
@@ -53,7 +62,7 @@ export const PredictPrefsControls: React.FC<PredictPrefsControlsProps> = ({
       />
       <TextField
         kind="line"
-        label="Suffix"
+        label={components.inputs.suffix.label}
         onChange={({ target: { value } }) =>
           onSettingChanged({ ...predictPrefs, suffix: value })
         }
@@ -61,7 +70,7 @@ export const PredictPrefsControls: React.FC<PredictPrefsControlsProps> = ({
       />
       <NumberFormatter
         numberFormat={predictPrefs.numberFormatting}
-        label="Number Formatting"
+        label={components.selects.numberFormatting.label}
         onFormatUpdate={(updatedNumberFormat: string) =>
           onSettingChanged({
             ...predictPrefs,

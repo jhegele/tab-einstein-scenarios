@@ -4,6 +4,8 @@ import { SFDCPredictionResponse } from '../../../api/types';
 import { Preferences, PreferencesAction } from '../../../store/types';
 import { TextFormatter, NumberFormatter } from '../../../components';
 import { TextField } from '@tableau/tableau-ui';
+import { StringsLanguages } from '../../../strings';
+import { getStringsByLanguageCode } from '../../../strings/utils';
 
 interface ActionPrefsContentProps {
   prediction: SFDCPredictionResponse;
@@ -20,16 +22,22 @@ export const ActionPrefsContent: React.FC<ActionPrefsContentProps> = ({
 interface ActionPrefsControlsProps {
   actionPrefs: PreferencesAction;
   onSettingChanged: (newPrefs: PreferencesAction) => void;
+  language: StringsLanguages;
 }
 
 export const ActionPrefsControls: React.FC<ActionPrefsControlsProps> = ({
   actionPrefs,
   onSettingChanged,
+  language,
 }) => {
+  const { components } = getStringsByLanguageCode(
+    language
+  ).strings.preferences.action;
+
   return (
     <React.Fragment>
       <TextField
-        label="Page Name"
+        label={components.inputs.pageName.label}
         kind="line"
         value={actionPrefs.pageName}
         onChange={({ target: { value } }) =>
@@ -37,7 +45,7 @@ export const ActionPrefsControls: React.FC<ActionPrefsControlsProps> = ({
         }
       />
       <TextFormatter
-        label="Primary Text Formatting"
+        label={components.inputs.primaryTextFormatting.label}
         textOptions={actionPrefs.textPrimary}
         onOptionUpdate={(updatedTextPrefs) =>
           onSettingChanged({ ...actionPrefs, textPrimary: updatedTextPrefs })
@@ -45,7 +53,7 @@ export const ActionPrefsControls: React.FC<ActionPrefsControlsProps> = ({
       />
       <NumberFormatter
         numberFormat={actionPrefs.primaryNumberFormatting}
-        label="Primary Number Formatting"
+        label={components.inputs.primaryNumberFormatting.label}
         onFormatUpdate={(updatedNumberFormat: string) =>
           onSettingChanged({
             ...actionPrefs,
@@ -54,7 +62,7 @@ export const ActionPrefsControls: React.FC<ActionPrefsControlsProps> = ({
         }
       />
       <TextFormatter
-        label="Secondary Text Formatting"
+        label={components.inputs.secondaryTextFormatting.label}
         textOptions={actionPrefs.textSecondary}
         onOptionUpdate={(updatedTextPrefs) =>
           onSettingChanged({ ...actionPrefs, textSecondary: updatedTextPrefs })
@@ -62,7 +70,7 @@ export const ActionPrefsControls: React.FC<ActionPrefsControlsProps> = ({
       />
       <NumberFormatter
         numberFormat={actionPrefs.secondaryNumberFormatting}
-        label="Secondary Number Formatting"
+        label={components.inputs.secondaryNumberFormatting.label}
         onFormatUpdate={(updatedNumberFormat: string) =>
           onSettingChanged({
             ...actionPrefs,
