@@ -1,5 +1,14 @@
 # Change Log
 
+## v0.4.1
+
+_Released on 22 Feb 2021_
+
+This is a minor release consisting of security fixes detailed below.
+
+- Upgraded multiple JS package dependencies to resolve security issues
+- Upgraded Python `crypotgraphy` package to resolve security issues
+
 ## v0.4.0
 
 _Released on 17 Aug 2020_
